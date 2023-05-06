@@ -2,7 +2,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import Counter from '@/components/counter'
 import { PlayerContextProvider } from '@/components/playerContext'
-import Home from './page'
+import Player from '@/components/player'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,6 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<PlayerContextProvider>
 					{children}
 					<Counter parent='Root Layout' />
+					<Player />
 				</PlayerContextProvider>
 			</body>
 		</html>
