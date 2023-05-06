@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import PlayToggle from './playToggle'
+import ProgressBar from './progressBar'
 
 export default function Player() {
 	const [playing, setPlaying] = useState<boolean>(false)
@@ -9,7 +10,6 @@ export default function Player() {
 	const audio = useRef<HTMLMediaElement>(null)
 	const btnTogglePlay = useRef<HTMLButtonElement>(null)
 	const volume = useRef<HTMLInputElement>(null)
-	const progressBar = useRef<HTMLInputElement>(null)
 	const audioContext = useRef<AudioContext | null>(null)
 	const gainNode = useRef<GainNode | null>(null)
 	const track = useRef<MediaElementAudioSourceNode | null>(null)
@@ -59,8 +59,10 @@ export default function Player() {
 					setPlaying(false)
 				}}
 				onLoadedMetadata={e => {
+					console.log('loaded metadata')
 					setPlayTime({ currentTime: e.currentTarget.currentTime, duration: e.currentTarget.duration })
 				}}
+				onCanPlay={() => console.log('can play')}
 				onTimeUpdate={e => {
 					audio.current && setPlayTime({ currentTime: audio.current.currentTime, duration: audio.current.duration })
 				}}
@@ -75,22 +77,16 @@ export default function Player() {
 				<PlayToggle playState={playing} size={30} darkTheme={true} />
 			</button>
 			<input ref={volume} type='range' min='0' max='1.2' step='0.01' defaultValue='1' onMouseUp={changeVolume} />
-			<input
-				ref={progressBar}
-				type='range'
-				min='0'
-				max={playTime?.duration.toString() ?? '100'}
-				// value={playTime?.currentTime.toString() ?? '0'}
-				defaultValue='0'
-				onMouseUp={() => {
-					audio.current && progressBar.current && seekTo(Number(progressBar.current.value))
-				}}
-				onTouchEnd={() => {
-					audio.current && progressBar.current && seekTo(Number(progressBar.current.value))
-				}}
-			/>
-			<p>{playTime !== null ? convertToMinSec(playTime.currentTime) : '--'}</p>
-			<p>{playTime !== null ? convertToMinSec(playTime.duration) : '--'}</p>
+			<span className='flex items-center'>
+				<ProgressBar playTime={playTime} seekTo={seekTo} />
+				<div className='grid grid-rows-1 grid-cols-5'>
+					<div className='col-span-2 text-center'>
+						{playTime !== null ? convertToMinSec(playTime.currentTime) : '--'}
+					</div>
+					<div className='text-center'>{' / '}</div>
+					<div className='col-span-2 text-center'>{playTime !== null ? convertToMinSec(playTime.duration) : '--'}</div>
+				</div>
+			</span>
 		</div>
 	)
 }

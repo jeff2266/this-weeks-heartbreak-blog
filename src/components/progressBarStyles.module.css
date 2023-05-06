@@ -1,0 +1,16 @@
+.progressFull {
+    display         : flex;
+    width           : 100%;
+    height          : 6px;
+    margin          : 0.5em 1em;
+    background-color: #ccc;
+    border-radius   : 12px;
+    cursor          : pointer;
+}
+
+.progressCurrent {
+    height          : inherit;
+    background-color: #555;
+    border-radius   : inherit;
+    position        : relative;
+}
