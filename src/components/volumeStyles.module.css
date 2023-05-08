@@ -1,6 +1,6 @@
-.progressCurrent {
+.volumeSliderCurrent {
     display         : flex;
-    height          : inherit;
+    width           : inherit;
     background-color: #555;
     border-radius   : inherit;
     position        : relative;
