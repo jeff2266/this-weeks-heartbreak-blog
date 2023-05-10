@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from 'react'
 import PlayToggle from './playToggle'
 import ProgressBar from './progressBar'
 import Volume from './volume'
+import { usePlayerContext } from './playerContext'
 
 export default function Player() {
+	const { title } = usePlayerContext()
 	const [playing, setPlaying] = useState<boolean>(false)
 	const [playTime, setPlayTime] = useState<{ currentTime: number; duration: number } | null>(null)
 	const [volume, setVolume] = useState({ value: 1, mute: false })
@@ -51,7 +53,7 @@ export default function Player() {
 			<audio
 				ref={audio}
 				style={{ display: 'none' }}
-				src='/untitled_Master.wav'
+				src={`${title}`}
 				controls
 				controlsList='play nodownload noplaybackrate'
 				onPlay={() => {
@@ -81,7 +83,7 @@ export default function Player() {
 						<PlayToggle playState={playing} togglePlay={togglePlay} darkTheme={true} />
 					</div>
 					<div className='row-start-1 col-start-2 row-span-2 col-span-8 sm:col-span-7 md:col-span-8 place-items-center flex flex-col-reverse'>
-						<p>Title</p>
+						<p>{title}</p>
 					</div>
 					<div className='row-start-3 col-start-2 row-span-1 col-span-8 sm:col-span-7 md:col-span-8 place-items-center flex justify-around'>
 						<ProgressBar

@@ -8,7 +8,6 @@ export default function Home() {
 	return (
 		<main className='flex-col items-center justify-between p-24'>
 			<p>main page</p>
-			<Counter parent='Home Page' />
 			<Link href='/posts'>posts</Link>
 		</main>
 	)

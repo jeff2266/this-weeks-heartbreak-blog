@@ -1,17 +1,17 @@
 'use client'
 
-import { ReactNode, createContext, useContext, useState } from 'react'
+import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from 'react'
 
 type PlayerContextState = {
-	count: number
-	setCount: (color: number) => void
+	title: string | null
+	setTitle: Dispatch<SetStateAction<string | null>>
 }
 
-const PlayerContext = createContext<PlayerContextState>({ count: 0, setCount: () => {} })
+const PlayerContext = createContext<PlayerContextState>({ title: null, setTitle: () => {} })
 
 export const PlayerContextProvider = ({ children }: { children?: ReactNode }) => {
-	const [count, setCount] = useState(0)
-	return <PlayerContext.Provider value={{ count, setCount }}>{children}</PlayerContext.Provider>
+	const [title, setTitle] = useState<string | null>('fsm-team-racing.mp3')
+	return <PlayerContext.Provider value={{ title, setTitle }}>{children}</PlayerContext.Provider>
 }
 
 export const usePlayerContext = () => useContext(PlayerContext)
