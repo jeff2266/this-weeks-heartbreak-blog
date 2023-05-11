@@ -1,13 +1,13 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { ReactEventHandler, useEffect, useRef, useState } from 'react'
 import PlayToggle from './playToggle'
 import ProgressBar from './progressBar'
 import Volume from './volume'
 import { usePlayerContext } from './playerContext'
 
 export default function Player() {
-	const { title } = usePlayerContext()
+	const { currentTitle } = usePlayerContext()
 	const [playing, setPlaying] = useState<boolean>(false)
 	const [playTime, setPlayTime] = useState<{ currentTime: number; duration: number } | null>(null)
 	const [volume, setVolume] = useState({ value: 1, mute: false })
@@ -33,6 +33,18 @@ export default function Player() {
 		return `${min}:${sec}`
 	}
 
+	const trackLoaded: ReactEventHandler<HTMLAudioElement> = e => {
+		if (!audioContext.current || !audio.current) return
+		if (audioContext.current.state === 'suspended') {
+			audioContext.current.resume().then(() => {
+				playing && audio.current?.play()
+			})
+		} else {
+			playing && audio.current?.play()
+		}
+		setPlayTime({ currentTime: e.currentTarget.currentTime, duration: e.currentTarget.duration })
+	}
+
 	useEffect(() => {
 		if (audioContext.current !== null) return
 		audioContext.current = new window.AudioContext()
@@ -53,7 +65,7 @@ export default function Player() {
 			<audio
 				ref={audio}
 				style={{ display: 'none' }}
-				src={`${title}`}
+				src={`${currentTitle}`}
 				controls
 				controlsList='play nodownload noplaybackrate'
 				onPlay={() => {
@@ -62,10 +74,7 @@ export default function Player() {
 				onPause={() => {
 					setPlaying(false)
 				}}
-				onLoadedMetadata={e => {
-					console.log('loaded metadata')
-					setPlayTime({ currentTime: e.currentTarget.currentTime, duration: e.currentTarget.duration })
-				}}
+				onLoadedMetadata={trackLoaded}
 				onCanPlay={() => console.log('can play')}
 				onTimeUpdate={() => {
 					audio.current && setPlayTime({ currentTime: audio.current.currentTime, duration: audio.current.duration })
@@ -76,6 +85,9 @@ export default function Player() {
 				onError={() => {
 					setPlayTime(null)
 				}}
+				onChange={e => {
+					console.log(e)
+				}}
 			/>
 			<span className='w-full flex flex-nowrap justify-center text-xs md:text-sm 2xl:text-base py-1.5 md:py-2 px-1 fixed bottom-0 select-none'>
 				<div className='grid grid-rows-4 grid-cols-12 w-full md:w-3/4 lg:w-1/2'>
@@ -83,7 +95,7 @@ export default function Player() {
 						<PlayToggle playState={playing} togglePlay={togglePlay} darkTheme={true} />
 					</div>
 					<div className='row-start-1 col-start-2 row-span-2 col-span-8 sm:col-span-7 md:col-span-8 place-items-center flex flex-col-reverse'>
-						<p>{title}</p>
+						<p>{currentTitle}</p>
 					</div>
 					<div className='row-start-3 col-start-2 row-span-1 col-span-8 sm:col-span-7 md:col-span-8 place-items-center flex justify-around'>
 						<ProgressBar
@@ -108,7 +120,6 @@ export default function Player() {
 					</div>
 				</div>
 			</span>
-			{/* <input ref={volume} type='range' min='0' max='1.2' step='0.01' defaultValue='1' onMouseUp={setVolume} /> */}
 		</>
 	)
 }

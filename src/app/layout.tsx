@@ -1,6 +1,5 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
-import Counter from '@/components/counter'
 import { PlayerContextProvider } from '@/components/playerContext'
 import Player from '@/components/player'
 

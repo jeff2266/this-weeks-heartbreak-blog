@@ -1,4 +1,4 @@
-import Counter from '@/components/counter'
+import PostThumb from '@/components/postThumb'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
 
@@ -9,6 +9,8 @@ export default function Home() {
 		<main className='flex-col items-center justify-between p-24'>
 			<p>main page</p>
 			<Link href='/posts'>posts</Link>
+			<PostThumb title='fsm-team-racing.mp3' />
+			<PostThumb title='untitled_Master.wav' />
 		</main>
 	)
 }
