@@ -2,6 +2,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import { PlayerContextProvider } from '@/components/playerContext'
 import Player from '@/components/player'
+import UserSessionProvider from '@/components/userSessionProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -12,12 +13,14 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang='en'>
+		<html lang='en' className='scroll-smooth antialiased'>
 			<body className={inter.className}>
-				<PlayerContextProvider>
-					{children}
-					<Player />
-				</PlayerContextProvider>
+				<UserSessionProvider>
+					<PlayerContextProvider>
+						{children}
+						<Player />
+					</PlayerContextProvider>
+				</UserSessionProvider>
 			</body>
 		</html>
 	)
