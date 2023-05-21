@@ -5,19 +5,14 @@
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",
-		"build-lambda": "tsc --project tsconfig.lambda.json",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint",
+		"prettier": "prettier --write \"./**/*.{js, jsx, ts, tsx, json}\""
 	},
 	"dependencies": {
 		"@aws-sdk/client-s3": "^3.332.0",
 		"@aws-sdk/signature-v4-crt": "^3.329.0",
-		"@types/node": "^20.1.0",
-		"@types/react": "^18.2.5",
-		"@types/react-dom": "^18.2.4",
 		"autoprefixer": "10.4.14",
-		"eslint": "^8.40.0",
-		"eslint-config-next": "^13.4.1",
 		"next": "^13.4.1",
 		"next-auth": "^4.22.1",
 		"postcss": "8.4.23",
@@ -25,5 +20,14 @@
 		"react-dom": "^18.2.0",
 		"tailwindcss": "3.3.2",
 		"typescript": "5.0.4"
+	},
+	"devDependencies": {
+		"@types/node": "^20.2.1",
+		"@types/react": "^18.2.6",
+		"@types/react-dom": "^18.2.4",
+		"eslint": "^8.41.0",
+		"eslint-config-next": "^13.4.3",
+		"eslint-config-prettier": "^8.8.0",
+		"prettier": "^2.8.8"
 	}
 }

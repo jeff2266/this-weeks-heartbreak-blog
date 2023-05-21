@@ -28,11 +28,11 @@ const getObjectResult = await s3.send(getObjectCommand)
 
 export default function Home() {
 	return (
-		<main className='flex-col items-center justify-between p-24'>
+		<main className="flex-col items-center justify-between p-24">
 			<p>main page</p>
-			<Link href='/posts'>posts</Link>
-			<PostThumb title='fsm-team-racing.mp3' />
-			<PostThumb title='untitled_Master.wav' />
+			<Link href="/posts">posts</Link>
+			<PostThumb title="fsm-team-racing.mp3" />
+			<PostThumb title="untitled_Master.wav" />
 		</main>
 	)
 }
