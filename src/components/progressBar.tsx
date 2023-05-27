@@ -1,5 +1,5 @@
 import styles from './progressBarStyles.module.css'
-import { DetailedHTMLProps, HTMLAttributes, useRef } from 'react'
+import { useRef } from 'react'
 
 export type PlayTime = { currentTime: number; duration: number } | null
 
@@ -21,13 +21,14 @@ export default function ProgressBar({
 			onClick={e => {
 				progressFull.current &&
 					playTime &&
-					seekTo(((e.clientX - progressFull.current.offsetLeft) / progressFull.current.clientWidth) * playTime.duration)
-			}}
-		>
+					seekTo(
+						((e.clientX - progressFull.current.offsetLeft) / progressFull.current.clientWidth) *
+							playTime.duration
+					)
+			}}>
 			<span
 				className={styles.progressCurrent}
-				style={{ width: `${playTime ? (playTime.currentTime / playTime.duration) * 100 : 0}%` }}
-			></span>
+				style={{ width: `${playTime ? (playTime.currentTime / playTime.duration) * 100 : 0}%` }}></span>
 		</div>
 	)
 }

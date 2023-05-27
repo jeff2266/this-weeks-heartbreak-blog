@@ -1,20 +1,19 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
 import { usePlayerContext } from './playerContext'
+import { useSupabase } from './browserSupabaseProvider'
 
 export default function PostThumb({ title }: { title: string }) {
-	const { data: session } = useSession()
+	const { supabase } = useSupabase()
 	const { setTitle } = usePlayerContext()
 	return (
 		<div>
 			<h2>{title}</h2>
 			<button
 				onClick={() => {
-					console.log(JSON.stringify(session))
+					console.log(JSON.stringify(supabase))
 					setTitle(title)
-				}}
-			>
+				}}>
 				play
 			</button>
 		</div>
