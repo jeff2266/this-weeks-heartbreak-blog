@@ -1,13 +1,13 @@
 'use client'
 
 import { ReactEventHandler, useEffect, useRef, useState } from 'react'
+import { usePlayerContext } from './playerContext'
 import PlayToggle from './playToggle'
 import ProgressBar from './progressBar'
 import Volume from './volume'
-import { usePlayerContext } from './playerContext'
 
 export default function Player() {
-	const { currentTitle } = usePlayerContext()
+	const { currentTrack } = usePlayerContext()
 	const [playing, setPlaying] = useState<boolean>(false)
 	const [playTime, setPlayTime] = useState<{ currentTime: number; duration: number } | null>(null)
 	const [volume, setVolume] = useState({ value: 1, mute: false })
@@ -28,6 +28,7 @@ export default function Player() {
 	}
 
 	const convertToMinSec = (time: number) => {
+		if (isNaN(time) || time < 0) return '0:00'
 		const sec = `${parseInt(`${time % 60}`)}`.padStart(2, '0')
 		const min = parseInt(`${(time / 60) % 60}`)
 		return `${min}:${sec}`
@@ -65,9 +66,10 @@ export default function Player() {
 			<audio
 				ref={audio}
 				style={{ display: 'none' }}
-				src={`${currentTitle}`}
+				src={currentTrack?.url ?? undefined}
 				controls
-				controlsList='play nodownload noplaybackrate'
+				controlsList="play nodownload noplaybackrate"
+				crossOrigin="anonymous"
 				onPlay={() => {
 					setPlaying(true)
 				}}
@@ -77,7 +79,8 @@ export default function Player() {
 				onLoadedMetadata={trackLoaded}
 				onCanPlay={() => console.log('can play')}
 				onTimeUpdate={() => {
-					audio.current && setPlayTime({ currentTime: audio.current.currentTime, duration: audio.current.duration })
+					audio.current &&
+						setPlayTime({ currentTime: audio.current.currentTime, duration: audio.current.duration })
 				}}
 				onEnded={() => {
 					setPlaying(false)
@@ -89,33 +92,33 @@ export default function Player() {
 					console.log(e)
 				}}
 			/>
-			<span className='w-full flex flex-nowrap justify-center text-xs md:text-sm 2xl:text-base py-1.5 md:py-2 px-1 fixed bottom-0 select-none'>
-				<div className='grid grid-rows-4 grid-cols-12 w-full md:w-3/4 lg:w-1/2'>
-					<div className='row-start-2 col-start-1 row-span-3 col-span-1 md:mx-2 place-items-center flex justify-end'>
+			<span className="w-full flex flex-nowrap justify-center text-xs md:text-sm 2xl:text-base py-1.5 md:py-2 px-1 fixed bottom-0 select-none">
+				<div className="grid grid-rows-4 grid-cols-12 w-full md:w-3/4 lg:w-1/2">
+					<div className="row-start-2 col-start-1 row-span-3 col-span-1 md:mx-2 place-items-center flex justify-end">
 						<PlayToggle playState={playing} togglePlay={togglePlay} darkTheme={true} />
 					</div>
-					<div className='row-start-1 col-start-2 row-span-2 col-span-8 sm:col-span-7 md:col-span-8 place-items-center flex flex-col-reverse'>
-						<p>{currentTitle}</p>
+					<div className="row-start-1 col-start-2 row-span-2 col-span-8 sm:col-span-7 md:col-span-8 place-items-center flex flex-col-reverse">
+						<p>{currentTrack?.title}</p>
 					</div>
-					<div className='row-start-3 col-start-2 row-span-1 col-span-8 sm:col-span-7 md:col-span-8 place-items-center flex justify-around'>
+					<div className="row-start-3 col-start-2 row-span-1 col-span-8 sm:col-span-7 md:col-span-8 place-items-center flex justify-around">
 						<ProgressBar
-							className='h-1.5 mx-1 w-full bg-gray-200 rounded cursor-pointer'
+							className="h-1.5 mx-1 w-full bg-gray-200 rounded cursor-pointer"
 							playTime={playTime}
 							seekTo={seekTo}
 						/>
 					</div>
-					<div className='row-start-2 col-start-10 sm:col-start-9 md:col-start-10 row-span-3 col-span-3 md:col-span-2 place-items-stretch flex justify-end md:mx-1.5 items-center min-w-[6em]'>
-						<div className='mx-1 sm:mx-2 grid grid-rows-1 grid-cols-7'>
-							<div className='col-span-3 text-center'>
+					<div className="row-start-2 col-start-10 sm:col-start-9 md:col-start-10 row-span-3 col-span-3 md:col-span-2 place-items-stretch flex justify-end md:mx-1.5 items-center min-w-[6em]">
+						<div className="mx-1 sm:mx-2 grid grid-rows-1 grid-cols-7">
+							<div className="col-span-3 text-center">
 								{playTime !== null ? convertToMinSec(playTime.currentTime) : '--'}
 							</div>
-							<div className='text-center'>{' / '}</div>
-							<div className='col-span-3 text-center'>
+							<div className="text-center">{' / '}</div>
+							<div className="col-span-3 text-center">
 								{playTime !== null ? convertToMinSec(playTime.duration) : '--'}
 							</div>
 						</div>
 					</div>
-					<div className='hidden sm:flex row-start-2 col-start-12 row-span-3 col-span-1 place-items-stretch items-center'>
+					<div className="hidden sm:flex row-start-2 col-start-12 row-span-3 col-span-1 place-items-stretch items-center">
 						<Volume volume={volume} setVolume={setVolume} />
 					</div>
 				</div>

@@ -45,11 +45,11 @@ export default function BrowserSupabaseProvider({
 	)
 }
 
-export const useSupabase = () => {
+export const useBrowserSupabase = () => {
 	const context = useContext(Context)
 
 	if (context === undefined) {
-		throw new Error('useSupabase must be used inside SupabaseProvider')
+		throw new Error('useSupabase must be used inside BrowserSupabaseProvider')
 	}
 
 	return context

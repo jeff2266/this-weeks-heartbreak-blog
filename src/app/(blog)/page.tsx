@@ -15,15 +15,16 @@ export default async function Home() {
 	} = await supabase.auth.getSession()
 
 	let { data } = await supabase.from('posts').select()
-	console.log(data)
 
 	return (
-		<main className={`flex-col items-center justify-between p-24 ${inter.className}`}>
+		<main className={`flex-col items-center justify-between p-24 box-border ${inter.className}`}>
 			<p>main page</p>
 			<Link href="/posts">posts</Link>
-			{data?.map(post => (
-				<PostThumb title={post.title} />
-			))}
+			<div className="flex flex-wrap">
+				{data?.map(post => (
+					<PostThumb post={post} />
+				))}
+			</div>
 		</main>
 	)
 }
