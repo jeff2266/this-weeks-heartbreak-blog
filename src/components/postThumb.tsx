@@ -1,37 +1,50 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { usePlayerContext } from './playerContext'
 import { Database } from '@/lib/schema'
-import { useBrowserSupabase } from './browserSupabaseProvider'
+import Image from 'next/image'
 
-type Post = Database['public']['Tables']['posts']['Row']
+type Params = Database['public']['Tables']['posts']['Row'] & {
+	author: string
+	imageUrl: string | null
+	audioUrl: string | null
+}
 
-export default function PostThumb({ post }: { post: Post }) {
-	const { supabase } = useBrowserSupabase()
-	const { setTrack } = usePlayerContext()
-	const [url, setUrl] = useState<string | null>(null)
-	const [playing, setPlaying] = useState<boolean>(false)
+export default function PostThumb({ params: { id, title, author, created_at, imageUrl, audioUrl } }: { params: Params }) {
+	const { track, setTrack, isPlaying, setIsPlaying } = usePlayerContext()
 
-	useEffect(() => {
-		console.log(post.audio)
-		if (playing && url) setTrack({ title: post.title, url: url })
-	}, [playing, url])
-
-	const play = () => {
-		setPlaying(true)
-		supabase.storage
-			.from('audio')
-			.createSignedUrl(post.audio, 60 * 60 * 2)
-			.then(res => setUrl(res.data?.signedUrl ?? null))
+	const onClick = () => {
+		if (track?.id === id) {
+			setIsPlaying(prev => !prev)
+		} else {
+			setTrack({ id, title, url: audioUrl, duration: null })
+			setIsPlaying(true)
+		}
 	}
 
-	const pause = () => {}
-
 	return (
-		<div className="w-full md:w-4/12 lg:3/12 xl:w-2/12 border-2 rounded-sm p-2">
-			<h2>{post.title}</h2>
-			{playing ? url ? <p>playing</p> : <p>...</p> : <button onClick={play}>play</button>}
+		<div className="w-full md:w-1/2 lg:1/3 xl:w-3/12 p-2">
+			<div className="border-2 rounded-sm p-2">
+				<div className="flex flex-col">
+					<button
+						className={`w-full pb-[55%] relative ${audioUrl ? 'hover:cursor-pointer' : 'hover:cursor-default'}`}
+						onClick={audioUrl ? onClick : undefined}>
+						<Image
+							src={imageUrl ?? '/img/post-thumb-image-default.jpg'}
+							alt="thumb image"
+							fill={true}
+							style={{ objectFit: 'cover' }}
+						/>
+					</button>
+					<a href={`posts/${id}`}>
+						<h2>{title}</h2>
+						<div className="flex justify-between text-sm">
+							<p>{author}</p>
+							<p>{new Date(created_at).toLocaleDateString('en-US', { dateStyle: 'short' })}</p>
+						</div>
+					</a>
+				</div>
+			</div>
 		</div>
 	)
 }

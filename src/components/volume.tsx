@@ -1,4 +1,3 @@
-import styles from './volumeStyles.module.css'
 import { Dispatch, SetStateAction, useLayoutEffect, useRef, useState } from 'react'
 
 export default function Volume({
@@ -49,27 +48,28 @@ export default function Volume({
 
 	return (
 		<div
-			className='flex'
+			className="flex"
 			onMouseOver={() => {
 				setShowSlider(true)
 			}}
 			onMouseOut={() => {
 				if (!settingVolume) setShowSlider(false)
-			}}
-		>
-			<div className={`${showSlider ? '' : 'hidden'} absolute bottom-8 rounded px-2.5 pb-3 h-16 z-10`}>
+			}}>
+			<div className={`${showSlider ? '' : 'hidden'} absolute bottom-8 px-2.5 pb-3 h-16 z-10`}>
 				<div
 					ref={sliderFull}
-					className='w-1.5 h-full flex flex-col-reverse bg-gray-200 rounded cursor-pointer'
+					className="w-2 h-full flex flex-col-reverse bg-gray-200 rounded cursor-pointer"
 					onMouseDown={e => {
 						setSettingVolume(true)
 						setVolume({ value: calcSliderValue(e.clientY), mute: false })
-					}}
-				>
+					}}>
 					<div
-						className={styles.volumeSliderCurrent}
-						style={{ height: `${volume.mute ? '0' : volume.value * 100}%` }}
-					></div>
+						className="flex relative bg-gray-600"
+						style={{
+							height: `${volume.mute ? '0' : volume.value * 100}%`,
+							width: 'inherit',
+							borderRadius: 'inherit'
+						}}></div>
 				</div>
 			</div>
 			<button
@@ -78,22 +78,20 @@ export default function Volume({
 					volume.mute
 						? setVolume(prev => ({ value: prev.value > 0 ? prev.value : 0.1, mute: false }))
 						: setVolume(prev => ({ ...prev, mute: true }))
-				}}
-			>
+				}}>
 				<svg
-					xmlns='http://www.w3.org/2000/svg'
-					version='1.0'
-					width='28'
-					height='28'
-					viewBox='0 0 75 75'
-					stroke='#fff'
-					strokeWidth='5'
-				>
-					<path d='m39,14-17,15H6V48H22l17,15z' fill='#fff' strokeLinejoin='round' />
+					xmlns="http://www.w3.org/2000/svg"
+					version="1.0"
+					width="28"
+					height="28"
+					viewBox="0 0 75 75"
+					stroke="#fff"
+					strokeWidth="5">
+					<path d="m39,14-17,15H6V48H22l17,15z" fill="#fff" strokeLinejoin="round" />
 					{volume.value === 0 || volume.mute ? (
-						<path d='m49,26 20,24m0-24-20,24' fill='none' strokeLinecap='round' />
+						<path d="m49,26 20,24m0-24-20,24" fill="none" strokeLinecap="round" />
 					) : (
-						<path d='M50,27.6a19.5,19.5 0 0 1 0,21.4M59.1,20.5a30,30 0 0 1 0,35.6' strokeLinecap='round' />
+						<path d="M50,27.6a19.5,19.5 0 0 1 0,21.4M59.1,20.5a30,30 0 0 1 0,35.6" strokeLinecap="round" />
 					)}
 				</svg>
 			</button>
