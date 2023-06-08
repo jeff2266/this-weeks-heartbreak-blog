@@ -1,8 +1,5 @@
 import '@/app/globals.css'
 import { Inter } from 'next/font/google'
-import { cookies } from 'next/headers'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import BrowserSupabaseProvider from '@/components/browserSupabaseProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,17 +10,9 @@ export const metadata = {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-	const supabase = createServerComponentClient({ cookies })
-
-	const {
-		data: { session }
-	} = await supabase.auth.getSession()
-
 	return (
 		<html lang="en" className="scroll-smooth antialiased">
-			<body className={inter.className}>
-				<BrowserSupabaseProvider session={session}>{children}</BrowserSupabaseProvider>
-			</body>
+			<body className={inter.className}>{children}</body>
 		</html>
 	)
 }

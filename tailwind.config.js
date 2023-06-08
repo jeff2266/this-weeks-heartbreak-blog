@@ -15,6 +15,26 @@ module.exports = {
 			'3xl': '1.953rem',
 			'4xl': '2.441rem',
 			'5xl': '3.052rem'
+		},
+		extend: {
+			keyframes: {
+				slideUp: {
+					'0%': {
+						transform: 'translateY(200px)',
+						opacity: '0'
+					},
+					'100%': {
+						transform: 'translateY(0)',
+						opacity: '1'
+					}
+
+				}
+			}
+		}
+	},
+	variants: {
+		extend: {
+			visibility: ["group-hover"],
 		}
 	},
 	plugins: []
