@@ -3,7 +3,7 @@
 import { ReactEventHandler, useEffect, useRef, useState } from 'react'
 import { usePlayerContext } from './playerContext'
 import PlayToggle from './playToggle'
-import ProgressBar from './progressBar'
+import ProgressBar from '../progressBar'
 import Volume from './volume'
 
 export default function Player() {
@@ -95,7 +95,7 @@ export default function Player() {
 				<span className="w-full flex flex-nowrap justify-center text-xs md:text-sm 2xl:text-base py-1.5 md:py-2 px-1 fixed bottom-0 select-none bg-inherit animate-[slideUp_0.5s_ease_1]">
 					<div className="grid grid-rows-4 grid-cols-12 w-full md:w-3/4 lg:w-1/2">
 						<div className="row-start-2 col-start-1 row-span-3 col-span-1 md:mx-2 place-items-center flex justify-end">
-							<PlayToggle playState={isPlaying} togglePlay={togglePlay} darkTheme={true} />
+							<PlayToggle playState={isPlaying} togglePlay={togglePlay} />
 						</div>
 						<div className="row-start-1 col-start-2 row-span-2 col-span-8 sm:col-span-7 md:col-span-8 place-items-center flex flex-col-reverse">
 							<p>{track?.title}</p>

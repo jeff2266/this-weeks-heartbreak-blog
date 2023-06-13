@@ -1,8 +1,9 @@
-import PostThumb from '@/components/postThumb'
-import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Database } from '@/lib/schema'
+import PostThumb from '@/components/postThumb'
+import SearchBar from '@/components/searchBar'
+import Banner from '@/components/banner/banner'
 
 const SIGNED_URL_EXPR = 60 * 60 * 2
 
@@ -29,7 +30,10 @@ export default async function Home() {
 
 	return (
 		<main className={`flex-col items-center p-16`}>
-			<Link href="/posts">posts</Link>
+			<Banner />
+			<div className="flex justify-end align-bottom">
+				<SearchBar />
+			</div>
 			<div className="flex flex-wrap justify-start -m-2">
 				{signedPosts?.map(post => (
 					<PostThumb
