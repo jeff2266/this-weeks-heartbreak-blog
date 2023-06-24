@@ -1,7 +1,7 @@
 'use client'
 
-import { Noto_Sans_Mono } from 'next/font/google'
 import Cursor from './cursor'
+import { Noto_Sans_Mono } from 'next/font/google'
 import { useEffect, useRef, useState } from 'react'
 import { PulseCallback, usePulse } from '../usePulse'
 
@@ -10,19 +10,31 @@ const notoSansMono = Noto_Sans_Mono({ subsets: ['latin'] })
 const bank = [
 	'heartbreak',
 	'distraction',
-	'$100 lunch date',
+	'lunch date',
 	'sing-a-long♫',
 	'word is: dysphoria',
 	'mix to drive to',
 	'time to shine',
 	'shallow gesture',
-	'fork in the road'
+	'fork in the road',
+	'going to be better'
 ]
+
+const enum TypeState {
+	SHOWING,
+	TYPING,
+	DELETING
+}
+
+function getSlice(word: String, index: number) {
+	return word.slice(0, index)
+}
 
 export default function Banner() {
 	const [iBank, setIBank] = useState(0)
+	const [typeState, setTypeState] = useState<{ value: TypeState }>({ value: TypeState.SHOWING })
 	const pulseCt = useRef(0)
-	const { subscribe, unsubscribe } = usePulse(200, 100)
+	const { subscribe, unsubscribe } = usePulse(100, 50)
 
 	useEffect(() => {
 		subscribe(1, onPulse)
@@ -30,21 +42,44 @@ export default function Banner() {
 	})
 
 	const onPulse: PulseCallback = isUp => {
-		if (isUp) pulseCt.current++
-		if (pulseCt.current > 8) {
-			let iNext = Math.floor(Math.random() * bank.length)
-			if (iNext === iBank) iNext = (iBank + 1) % bank.length
-			console.log(iNext)
-			setIBank(iNext)
-			pulseCt.current = 0
+		switch (typeState.value) {
+			case TypeState.SHOWING:
+				if (isUp) pulseCt.current++
+				if (pulseCt.current > 64 + bank[iBank].length / 4) {
+					setTypeState({ value: TypeState.DELETING })
+					pulseCt.current = bank[iBank].length
+				}
+				break
+			case TypeState.TYPING:
+				pulseCt.current++
+				if (pulseCt.current === bank[iBank].length) {
+					pulseCt.current = 0
+					setTypeState({ value: TypeState.SHOWING })
+					break
+				}
+				setTypeState({ value: TypeState.TYPING })
+				break
+			case TypeState.DELETING:
+				pulseCt.current--
+				if (pulseCt.current === 0) {
+					let iNext = Math.floor(Math.random() * bank.length)
+					if (iNext === iBank) iNext = (iBank + 1) % bank.length
+					setIBank(iNext)
+					setTypeState({ value: TypeState.TYPING })
+					break
+				}
+				setTypeState({ value: TypeState.DELETING })
+				break
 		}
 	}
 
 	return (
-		<h1 className={`${notoSansMono.className} animate-[textShadow_0.7s_infinite] select-none my-4`}>
-			This week's&nbsp;
-			{bank[iBank]}
-			<Cursor period={1000} blink={true} />
-		</h1>
+		<div className="animate-[flicker_2s_ease_infinite]">
+			<h1 className={`${notoSansMono.className} animate-[textShadow_0.7s_infinite] select-none my-4`}>
+				This week's&nbsp;
+				<>{typeState.value === TypeState.SHOWING ? bank[iBank] : getSlice(bank[iBank], pulseCt.current)}</>
+				<Cursor period={1000} blink={typeState.value === TypeState.SHOWING} />
+			</h1>
+		</div>
 	)
 }
