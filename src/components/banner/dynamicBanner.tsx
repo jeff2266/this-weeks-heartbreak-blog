@@ -13,8 +13,6 @@ const bank = [
 	'lunch date',
 	'sing-a-long♫',
 	'word is: dysphoria',
-	'mix to drive to',
-	'time to shine',
 	'shallow gesture',
 	'fork in the road',
 	'going to be better'
@@ -30,7 +28,7 @@ function getSlice(word: String, index: number) {
 	return word.slice(0, index)
 }
 
-export default function Banner() {
+export default function DynamicBanner() {
 	const [iBank, setIBank] = useState(0)
 	const [typeState, setTypeState] = useState<{ value: TypeState }>({ value: TypeState.SHOWING })
 	const pulseCt = useRef(0)
