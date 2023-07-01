@@ -16,17 +16,14 @@ export default function SearchBar() {
 	const color = isSearchHover ? '#fff' : '#999'
 
 	return (
-		<form className="flex justify-end align-middle my-2">
-			<input
-				name="search"
-				className="bg-inherit border-b outline-none cursor-text mx-2"
-				placeholder="Search..."></input>
+		<form className="flex justify-end">
+			<input name="search" className="bg-inherit border-b outline-none cursor-text mx-2" placeholder="Search..." />
 			<button onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					xmlnsXlink="http://www.w3.org/1999/xlink"
 					viewBox="0,0,256,256"
-					height="100%">
+					height="1.5em">
 					<path
 						fill={color}
 						stroke={color}

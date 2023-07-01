@@ -28,7 +28,7 @@ function getSlice(word: String, index: number) {
 	return word.slice(0, index)
 }
 
-export default function DynamicBanner() {
+export default function DynamicTitle() {
 	const [iBank, setIBank] = useState(0)
 	const [typeState, setTypeState] = useState<{ value: TypeState }>({ value: TypeState.SHOWING })
 	const pulseCt = useRef(0)

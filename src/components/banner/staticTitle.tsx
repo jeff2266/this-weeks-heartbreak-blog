@@ -7,11 +7,11 @@ import { PulseCallback, usePulse } from '../usePulse'
 
 const notoSansMono = Noto_Sans_Mono({ subsets: ['latin'] })
 
-export default function StaticBanner({ animate }: { animate: boolean }) {
+export default function StaticTitle({ animate }: { animate: boolean }) {
 	const [iBank, setIBank] = useState(0)
 	const [cursorShow, setCursorShow] = useState(true)
 	const pulseCt = useRef(0)
-	const { subscribe, unsubscribe } = usePulse(800, 400)
+	const { subscribe, unsubscribe } = usePulse(2000, 1000)
 
 	useEffect(() => {
 		subscribe(1, onPulse)

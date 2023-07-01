@@ -3,7 +3,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Database } from '@/lib/schema'
 import PostThumb from '@/components/postThumb'
 import SearchBar from '@/components/searchBar'
-import StaticBanner from '@/components/banner/staticBanner'
+import StaticTitle from '@/components/banner/staticTitle'
 import UserSignIn from '@/components/userSignIn'
 
 const SIGNED_URL_EXPR = 60 * 60 * 2
@@ -32,8 +32,8 @@ export default async function Home() {
 	return (
 		<main className={`flex-col items-center p-16`}>
 			<div className="flex justify-between">
-				<StaticBanner animate={true} />
-				<div className="flex justify-end align-bottom">
+				<StaticTitle animate={true} />
+				<div className="flex items-center justify-end">
 					<SearchBar />
 					<UserSignIn />
 				</div>
