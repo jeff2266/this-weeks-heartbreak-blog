@@ -7,5 +7,6 @@
 	"arrowParens": "avoid",
 	"singleQuote": true,
 	"bracketSameLine": true,
-	"endOfLine": "lf"
+	"endOfLine": "lf",
+	"plugins": ["prettier-plugin-prisma"]
 }

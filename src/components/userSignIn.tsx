@@ -1,7 +1,5 @@
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import googleIcon from 'public/img/google.svg'
-import Image from 'next/image'
 import Link from 'next/link'
 
 export default async function UserSignIn() {
