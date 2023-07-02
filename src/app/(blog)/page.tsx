@@ -6,7 +6,6 @@ import UserSignIn from '@/components/userSignIn'
 const SIGNED_URL_EXPR = 60 * 60 * 2
 
 export default async function Home() {
-
 	// const { data: posts } = await supabase.from('posts').select(`*, user_data(display_name)`).returns<QueryReturn>()
 	// const { data: signedAudioUrls } = await supabase.storage
 	// 	.from('audio')
@@ -24,7 +23,7 @@ export default async function Home() {
 	// })
 
 	return (
-		<main className={`flex-col items-center sm:p-6 md:p-12`}>
+		<main className={`flex-col items-center p-6 md:p-12`}>
 			<div className="flex justify-between">
 				<StaticTitle animate={true} />
 				<div className="flex items-center justify-end">
