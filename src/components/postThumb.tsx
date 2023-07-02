@@ -1,7 +1,6 @@
 'use client'
 
 import { usePlayerContext } from './player/playerContext'
-import { Database } from '@/lib/schema'
 import Image from 'next/image'
 import pause from 'public/img/pause.svg'
 import play from 'public/img/play.svg'
