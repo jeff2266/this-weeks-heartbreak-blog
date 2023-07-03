@@ -18,7 +18,11 @@ export default async function UserSignIn() {
 			<div className="absolute w-max top-16 bg-white text-black px-4 py-2 rounded-sm invisible group-hover:visible">
 				<ul>
 					{session ? (
-						<></>
+						<>
+							<Link href="/api/auth/signout" className="flex items-center">
+								Sign Out
+							</Link>
+						</>
 					) : (
 						<li>
 							<Link href="/api/auth/signin" className="flex items-center">
