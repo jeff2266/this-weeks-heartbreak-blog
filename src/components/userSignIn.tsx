@@ -4,9 +4,6 @@ import Link from 'next/link'
 
 export default async function UserSignIn() {
 	const session = await getServerSession(authOptions)
-	console.log(session)
-
-	// console.log(session)
 	return (
 		<div className="flex flex-col items-end relative ms-2 group">
 			<svg

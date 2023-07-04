@@ -53,6 +53,7 @@ model User {
     role          Role      @default(BASIC)
     accounts      Account[]
     sessions      Session[]
+    posts         Post[]
 }
 
 model VerificationToken {
@@ -61,4 +62,15 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Post {
+    id       String   @id @default(cuid())
+    title    String   @db.VarChar(100)
+    authorId String
+    author   User     @relation(fields: [authorId], references: [id], onDelete: NoAction)
+    date     DateTime
+    content  String?
+    thumb    String?
+    media    String?
 }

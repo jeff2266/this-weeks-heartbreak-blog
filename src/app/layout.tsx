@@ -1,6 +1,5 @@
 import './globals.css'
 import { Rubik } from 'next/font/google'
-import { SessionProvider } from 'next-auth/react'
 import ClientProvider from '@/components/ClientProvider'
 
 const rubik = Rubik({ subsets: ['latin'] })
