@@ -4,6 +4,9 @@ const nextConfig = {
 	experimental: {
 		serverActions: true
 	},
+	images: {
+		domains: ['thisweeksheartbreak.s3.us-west-1.amazonaws.com']
+	},
 	webpack: config => ({
 		...config,
 		experiments: {
