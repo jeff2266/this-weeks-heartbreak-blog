@@ -4,6 +4,7 @@ import { usePlayerContext } from './player/playerContext'
 import Image from 'next/image'
 import pause from 'public/img/pause.svg'
 import play from 'public/img/play.svg'
+import defaultImage from 'public/img/post-thumb-image-default.jpg'
 
 type Params = Database['public']['Tables']['posts']['Row'] & {
 	author: string
@@ -30,7 +31,7 @@ export default function PostThumb({ params: { id, title, author, created_at, ima
 					{audioUrl ? (
 						<button className="w-full pb-[55%] relative group hover:cursor-pointer" onClick={onClick}>
 							<Image
-								src={imageUrl ?? '/img/post-thumb-image-default.jpg'}
+								src={imageUrl ?? defaultImage}
 								alt="thumb image"
 								fill={true}
 								style={{ objectFit: 'cover' }}
@@ -49,7 +50,7 @@ export default function PostThumb({ params: { id, title, author, created_at, ima
 					) : (
 						<div className="w-full pb-[55%] relative group hover:cursor-pointer">
 							<Image
-								src={imageUrl ?? '/img/post-thumb-image-default.jpg'}
+								src={imageUrl ?? defaultImage}
 								alt="thumb image"
 								fill={true}
 								style={{ objectFit: 'cover' }}

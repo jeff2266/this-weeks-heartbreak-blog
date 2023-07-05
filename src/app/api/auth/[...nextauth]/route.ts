@@ -18,18 +18,20 @@ export const authOptions: AuthOptions = {
 		// Called whenever a session is checked. Add user unique id from token to session
 		session({ session, token }) {
 			session.user.role = token.role
+			session.user.userId = token.userId
 			return session
 		},
 		async jwt({ token, user }) {
 			if (user) {
-				const dbAccount = await prisma.user.findUnique({
+				const dbUser = await prisma.user.findUnique({
 					where: {
 						id: user.id
 					}
 				})
 
-				if (dbAccount) {
-					token.role = dbAccount.role
+				if (dbUser) {
+					token.role = dbUser.role
+					token.userId = dbUser.id
 				}
 			}
 

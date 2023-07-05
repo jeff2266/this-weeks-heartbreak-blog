@@ -4,6 +4,7 @@ import 'next-auth/jwt'
 
 declare module 'next-auth/jwt' {
 	interface JWT {
+		userId: string
 		role: Role
 	}
 }
@@ -13,7 +14,7 @@ declare module 'next-auth' {
 	interface Session {
 		user: {
 			// Google token sub, unique to google user
-			id?: string
+			userId: string
 			role: Role
 		}
 	}
