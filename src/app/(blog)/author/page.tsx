@@ -53,7 +53,8 @@ export default async function Author() {
 				new PutObjectCommand({
 					Bucket: process.env.BUCKET_NAME,
 					Key: `thumbs/${thumbFile.name}`,
-					Body: Buffer.from(await thumbFile.arrayBuffer())
+					Body: Buffer.from(await thumbFile.arrayBuffer()),
+					ContentType: thumbFile.type
 				})
 			)
 			if (res.$metadata.httpStatusCode !== 200)
@@ -67,12 +68,13 @@ export default async function Author() {
 			// Must be smaller than 128 MB
 			if (mediaFile.size > 134217728) throw new Error('Media file too large...')
 
-			const mediaId = crypto.randomUUID()
+			const mediaId = `${crypto.randomUUID()}.${mediaFile.name.split('.').pop()}`
 			const res = await s3.send(
 				new PutObjectCommand({
 					Bucket: process.env.BUCKET_NAME,
 					Key: `media/${mediaId}`,
-					Body: Buffer.from(await mediaFile.arrayBuffer())
+					Body: Buffer.from(await mediaFile.arrayBuffer()),
+					ContentType: mediaFile.type
 				})
 			)
 			if (res.$metadata.httpStatusCode !== 200)

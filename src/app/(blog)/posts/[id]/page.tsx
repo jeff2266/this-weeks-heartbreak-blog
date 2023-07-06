@@ -27,7 +27,7 @@ export default async function Post({ params }: { params: { id: string } }) {
 			{post ? (
 				<>
 					<h2>{post.title}</h2>
-					<Image src={imageUrl} alt="post image" />
+					<Image src={imageUrl} alt="post image" width="800" height="600" />
 					<p>{post.content}</p>
 					<p>{post.author.name}</p>
 					<p>{post.date.toLocaleString()}</p>
