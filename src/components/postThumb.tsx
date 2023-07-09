@@ -51,7 +51,7 @@ export default function PostThumb({ post: { id, title, author, date, thumbUrl, m
 							</div>
 						</button>
 					) : (
-						<div className="w-full pb-[55%] relative group hover:cursor-pointer">
+						<div className="w-full pb-[55%] relative group">
 							<Image
 								src={thumbUrl ?? defaultImage}
 								alt="thumb image"
