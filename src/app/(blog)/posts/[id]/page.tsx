@@ -3,6 +3,7 @@ import { s3 } from '@/s3'
 import { GetObjectCommand } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import Image from 'next/image'
+import Link from 'next/link'
 import defaultImage from 'public/img/post-thumb-image-default.jpg'
 
 export default async function Post({ params }: { params: { id: string } }) {
@@ -35,6 +36,7 @@ export default async function Post({ params }: { params: { id: string } }) {
 			) : (
 				<p>Post not found...</p>
 			)}
+			<Link href="/">Home</Link>
 		</main>
 	)
 }

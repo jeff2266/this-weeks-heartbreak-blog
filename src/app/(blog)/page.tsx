@@ -1,22 +1,35 @@
 import { s3 } from '@/s3'
 import { prisma } from '@/db'
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
+import { GetObjectCommand } from '@aws-sdk/client-s3'
 import PostThumb from '@/components/postThumb'
 import SearchBar from '@/components/searchBar'
 import StaticTitle from '@/components/banner/staticTitle'
 import UserSignIn from '@/components/userSignIn'
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
-import { GetObjectCommand } from '@aws-sdk/client-s3'
+import Link from 'next/link'
 
-const SIGNED_URL_EXPR = 60 * 60 * 2
+const POSTS_PER_PAGE = 8
 
 export default async function Home({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+	const dbPostCt = await prisma.post.aggregate({
+		_count: {
+			_all: true
+		}
+	})
+	const totalPages = Math.ceil(dbPostCt._count._all / POSTS_PER_PAGE)
+
+	const pageParam = parseInt(searchParams['page'] as string)
+	const page = Number.isSafeInteger(pageParam) && pageParam > 0 && pageParam <= totalPages ? pageParam : 1
+
 	const dbPosts = await prisma.post.findMany({
 		orderBy: {
 			date: 'desc'
 		},
 		include: {
 			author: true
-		}
+		},
+		skip: POSTS_PER_PAGE * (page - 1),
+		take: POSTS_PER_PAGE
 	})
 	const signedPosts = await Promise.all(
 		dbPosts.map(async dbPost => ({
@@ -54,6 +67,11 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
 				{signedPosts?.map(post => (
 					<PostThumb key={post.id} post={post} />
 				))}
+			</div>
+			<div className="flex my-2">
+				{page > 1 && <Link href={`/?page=${page - 1}`}>{'< Prev'}</Link>}
+				<div className="grow"></div>
+				{page < totalPages && <Link href={`/?page=${page + 1}`}>{'Next >'}</Link>}
 			</div>
 			<div className="h-16"></div>
 		</main>
