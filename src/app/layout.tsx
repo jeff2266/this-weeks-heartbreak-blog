@@ -1,6 +1,6 @@
 import './globals.css'
 import { Rubik } from 'next/font/google'
-import ClientProvider from '@/components/clientProvider'
+// import ClientProvider from '@/components/clientProvider'
 
 const rubik = Rubik({ subsets: ['latin'] })
 
