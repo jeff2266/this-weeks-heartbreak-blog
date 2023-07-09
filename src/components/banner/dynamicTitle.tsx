@@ -74,7 +74,7 @@ export default function DynamicTitle() {
 	return (
 		<div className="animate-[flicker_2s_ease_infinite]">
 			<h1 className={`${notoSansMono.className} animate-[textShadow_0.7s_infinite] select-none my-4`}>
-				This week's&nbsp;
+				{"This week's "}
 				<>{typeState.value === TypeState.SHOWING ? bank[iBank] : getSlice(bank[iBank], pulseCt.current)}</>
 				<Cursor period={1000} blink={typeState.value === TypeState.SHOWING} />
 			</h1>

@@ -11,13 +11,7 @@ import Link from 'next/link'
 const POSTS_PER_PAGE = 8
 
 export default async function Home({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
-	const dbPostCt = await prisma.post.aggregate({
-		_count: {
-			_all: true
-		}
-	})
-	const totalPages = Math.ceil(dbPostCt._count._all / POSTS_PER_PAGE)
-
+	const totalPages = Math.ceil((await prisma.post.count()) / POSTS_PER_PAGE)
 	const pageParam = parseInt(searchParams['page'] as string)
 	const page = Number.isSafeInteger(pageParam) && pageParam > 0 && pageParam <= totalPages ? pageParam : 1
 
