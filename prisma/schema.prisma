@@ -2,8 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["referentialActions"] // You won't need this in Prisma 3.X or higher.
+    provider = "prisma-client-js"
 }
 
 datasource db {
@@ -67,7 +66,7 @@ model VerificationToken {
 
 model Post {
     id       String   @id @default(cuid())
-    title    String   @db.VarChar(100)
+    title    String
     authorId String
     author   User     @relation(fields: [authorId], references: [id], onDelete: NoAction)
     date     DateTime
