@@ -11,11 +11,11 @@ import Link from 'next/link'
 const POSTS_PER_PAGE = 8
 
 export default async function Home({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
-	// const totalPages = Math.ceil((await prisma.post.count()) / POSTS_PER_PAGE)
+	const totalPages = Math.ceil((await prisma.post.count()) / POSTS_PER_PAGE)
 	const pageParamStr = searchParams['page']
-	// let pageParamNum = 1
-	// if (typeof pageParamStr === 'string') pageParamNum = parseInt(pageParamStr)
-	// const page = Number.isSafeInteger(pageParamNum) && pageParamNum > 0 && pageParamNum <= totalPages ? pageParamNum : 1
+	let pageParamNum = 1
+	if (typeof pageParamStr === 'string') pageParamNum = parseInt(pageParamStr)
+	const page = Number.isSafeInteger(pageParamNum) && pageParamNum > 0 && pageParamNum <= totalPages ? pageParamNum : 1
 
 	const dbPosts = await prisma.post.findMany({
 		orderBy: {
@@ -23,9 +23,9 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
 		},
 		include: {
 			author: true
-		}
-		// skip: POSTS_PER_PAGE * (page - 1),
-		// take: POSTS_PER_PAGE
+		},
+		skip: POSTS_PER_PAGE * (page - 1),
+		take: POSTS_PER_PAGE
 	})
 	const signedPosts = await Promise.all(
 		dbPosts.map(async dbPost => ({
@@ -65,9 +65,9 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
 				))}
 			</div>
 			<div className="flex my-2">
-				{/* {page > 1 && <Link href={`/?page=${page - 1}`}>{'< Prev'}</Link>} */}
+				{page > 1 && <Link href={`/?page=${page - 1}`}>{'< Prev'}</Link>}
 				<div className="grow"></div>
-				{/* {page < totalPages && <Link href={`/?page=${page + 1}`}>{'Next >'}</Link>} */}
+				{page < totalPages && <Link href={`/?page=${page + 1}`}>{'Next >'}</Link>}
 			</div>
 			<div className="h-16"></div>
 		</main>
