@@ -1,7 +1,8 @@
 'use client'
 
-import Image from 'next/image'
 import { ChangeEventHandler, useState } from 'react'
+import Image from 'next/image'
+import loading from 'public/img/loading.svg'
 
 type Param = {
 	key?: string
@@ -9,6 +10,7 @@ type Param = {
 }
 
 export default function ImageSelect({ thumbs }: { thumbs: Param[] }) {
+	const [imageLoading, setImageLoading] = useState<boolean>(false)
 	const [thumbsSelect, setThumbsSelect] = useState<(Param & { isSelected: boolean })[]>(
 		thumbs.map(thumb => ({ ...thumb, isSelected: false }))
 	)
@@ -20,6 +22,7 @@ export default function ImageSelect({ thumbs }: { thumbs: Param[] }) {
 		if (selectedThumb) {
 			selectedThumb.isSelected = true
 			setThumbsSelect(newThumbsSelect)
+			setImageLoading(true)
 		}
 	}
 
@@ -34,8 +37,8 @@ export default function ImageSelect({ thumbs }: { thumbs: Param[] }) {
 	return (
 		<>
 			<label htmlFor="thumb-select">Image</label>
-			<div className="flex">
-				<ul className="w-2/5 h-32 max-h-32 p-2 me-2 overflow-auto border cursor-default select-none">
+			<div className="flex h-full">
+				<ul className="w-2/5 p-2 me-2 overflow-auto border cursor-default select-none">
 					{thumbs
 						.filter(thumb => thumb.key)
 						.map(thumb => (
@@ -53,31 +56,42 @@ export default function ImageSelect({ thumbs }: { thumbs: Param[] }) {
 							</li>
 						))}
 				</ul>
-				<div className="relative flex items-center justify-center overflow-hidden w-3/5 max-w ms-2 border">
-					{previewImage ? (
-						<Image
-							className="max-h-full max-w-full"
-							alt="preview"
-							src={previewImage}
-							fill={true}
-							style={{
-								objectFit: 'cover'
-							}}
-							sizes="100vw"
-						/>
-					) : (
-						<p className="italic">Preview</p>
-					)}
+				<div className="relative overflow-hidden w-3/5 ms-2 border">
+					<div className="h-full flex items-center justify-center">
+						{previewImage ? (
+							<div className="relative w-full pb-[55%] max-w-full max-h-full">
+								<Image
+									alt="preview"
+									src={previewImage}
+									fill={true}
+									style={{ objectFit: 'cover' }}
+									sizes="100vw"
+									onLoad={() => setImageLoading(false)}
+								/>
+								{imageLoading && (
+									<div className="w-full h-full flex justify-center align-middle absolute filter backdrop-blur-md bg-black/10 opacity-95 z-10">
+										<div className="w-1/4 relative">
+											<Image alt="" src={loading} fill={true} sizes="100vw" />
+										</div>
+									</div>
+								)}
+							</div>
+						) : (
+							<p className="italic">Preview</p>
+						)}
+					</div>
 				</div>
 			</div>
-			<input
-				type="file"
-				name="thumb-file"
-				id="thumb-file"
-				accept="image/png, image/jpeg"
-				className="bg-inherit border-b"
-				onChange={onThumbUpload}
-			/>
+			<div className="flex flex-col">
+				<input
+					type="file"
+					name="thumb-file"
+					id="thumb-file"
+					accept="image/png, image/jpeg"
+					className="bg-inherit border-b"
+					onChange={onThumbUpload}
+				/>
+			</div>
 			{thumbUpload && thumbUpload.key && thumbsSelect.find(thumb => thumb.key === thumbUpload.key) && (
 				<span className="text-xs italic text-right text-amber-400">{`File ${thumbUpload.key} already exists, will be overwritten...`}</span>
 			)}

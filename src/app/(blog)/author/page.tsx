@@ -107,7 +107,7 @@ export default async function Author() {
 			<h2 className="my-8">Post</h2>
 			<form className="min-w-fit" action={submit}>
 				<div className="flex my-2 mx-0 lg:mx-8">
-					<div className="flex flex-col m-6 w-2/5 min-w-fit">
+					<div className="flex flex-col m-4 w-2/5 min-w-fit">
 						<label htmlFor="title">Title</label>
 						<input
 							id="title"
@@ -116,16 +116,16 @@ export default async function Author() {
 							maxLength={50}
 							required
 						/>
-						<div className="flex flex-col my-2">
+						<div className="flex flex-col h-full my-2">
 							<label htmlFor="content">Content</label>
 							<textarea
 								id="content"
 								name="content"
-								className="bg-inherit border outline-none cursor-text resize-none p-2 h-48"
+								className="bg-inherit border outline-none cursor-text resize-none p-2 h-full"
 							/>
 						</div>
 					</div>
-					<div className="flex flex-col m-6 w-3/5 min-w-fit">
+					<div className="flex flex-col m-4 w-3/5 min-w-fit">
 						<ImageSelect thumbs={thumbs} />
 						<div className="flex flex-col my-2">
 							<label htmlFor="media-file">Media</label>
@@ -140,7 +140,7 @@ export default async function Author() {
 					</div>
 				</div>
 				<div className="flex justify-end mx-0 lg:mx-8">
-					<div className="m-6">
+					<div className="m-2">
 						<Link href="/">
 							<button type="button" className="bg-white hover:bg-slate-200 text-black p-2 rounded-sm">
 								Home
