@@ -57,29 +57,29 @@ export default function ImageSelect({ thumbs }: { thumbs: Param[] }) {
 						))}
 				</ul>
 				<div className="relative overflow-hidden w-3/5 ms-2 border">
-					<div className="h-full flex items-center justify-center">
-						{previewImage ? (
-							<div className="relative w-full pb-[55%] max-w-full max-h-full">
-								<Image
-									alt="preview"
-									src={previewImage}
-									fill={true}
-									style={{ objectFit: 'cover' }}
-									sizes="100vw"
-									onLoad={() => setImageLoading(false)}
-								/>
-								{imageLoading && (
-									<div className="w-full h-full flex justify-center align-middle absolute filter backdrop-blur-md bg-black/10 opacity-95 z-10">
-										<div className="w-1/4 relative">
-											<Image alt="" src={loading} fill={true} sizes="100vw" />
-										</div>
+					{previewImage ? (
+						<div className="relative w-full pb-[55%]">
+							<Image
+								alt="preview"
+								src={previewImage}
+								fill={true}
+								style={{ objectFit: 'cover' }}
+								sizes="100vw"
+								onLoad={() => setImageLoading(false)}
+							/>
+							{imageLoading && (
+								<div className="w-full h-full flex justify-center align-middle absolute filter backdrop-blur-md bg-black/10 opacity-95 z-10">
+									<div className="w-1/4 relative">
+										<Image alt="" src={loading} fill={true} sizes="100vw" />
 									</div>
-								)}
-							</div>
-						) : (
-							<p className="italic">Preview</p>
-						)}
-					</div>
+								</div>
+							)}
+						</div>
+					) : (
+						<div className="relative w-full pb-[55%]">
+							<p className="absolute italic">Preview</p>
+						</div>
+					)}
 				</div>
 			</div>
 			<div className="flex flex-col">

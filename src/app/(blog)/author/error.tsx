@@ -2,14 +2,15 @@
 
 import Link from 'next/link'
 
-export default function Error({ error }: { error: Error; reset: () => void }) {
+export default function Error({ error, reset }: { error: Error; reset: () => void }) {
 	return (
-		<html>
-			<body>
-				<h2>Something went wrong!</h2>
-				<p>{error.message}</p>
+		<main>
+			<h2>Something went wrong!</h2>
+			<p>{error.message}</p>
+			<div className="flex">
 				<Link href="/">Home</Link>
-			</body>
-		</html>
+				<button onClick={reset}>Back</button>
+			</div>
+		</main>
 	)
 }
