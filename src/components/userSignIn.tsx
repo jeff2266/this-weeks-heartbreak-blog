@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 export default async function UserSignIn() {
 	const session = await getServerSession(authOptions)
+
 	return (
 		<div className="flex flex-col items-end relative ms-2 group">
 			<svg
@@ -25,9 +26,7 @@ export default async function UserSignIn() {
 							)}
 							<hr className="my-2" />
 							<li>
-								<Link href="/api/auth/signout" className="flex items-center">
-									Sign Out
-								</Link>
+								<Link href="/api/auth/signout">Sign Out</Link>
 							</li>
 						</>
 					) : (
