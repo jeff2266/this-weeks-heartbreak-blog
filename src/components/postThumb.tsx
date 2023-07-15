@@ -43,9 +43,9 @@ export default function PostThumb({ post: { id, title, author, date, thumbUrl, m
 							<div className="w-full h-full invisible group-hover:visible flex justify-center align-middle absolute filter backdrop-blur-md bg-black/10 opacity-95 z-10">
 								<div className="w-1/4 relative">
 									{isPlaying && track?.id === id ? (
-										<Image src={pause} alt="pause" fill={true} />
+										<Image src={pause} alt="pause" fill={true} sizes="100vw" />
 									) : (
-										<Image src={play} alt="play" fill={true} />
+										<Image src={play} alt="play" fill={true} sizes="100vw" />
 									)}
 								</div>
 							</div>

@@ -36,7 +36,16 @@ export const authOptions: AuthOptions = {
 			}
 
 			return token
+		},
+		async signIn({ account, profile }) {
+			if (account?.provider === 'google') {
+				return profile?.email_verified ?? false
+			}
+			return true
 		}
+	},
+	pages: {
+		signIn: '/auth/signin'
 	}
 }
 

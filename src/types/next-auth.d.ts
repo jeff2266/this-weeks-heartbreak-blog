@@ -18,4 +18,7 @@ declare module 'next-auth' {
 			role: Role
 		}
 	}
+	interface Profile {
+		email_verified?: boolean
+	}
 }
