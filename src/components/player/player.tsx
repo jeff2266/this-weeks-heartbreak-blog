@@ -15,7 +15,6 @@ export default function Player() {
 	const trackNode = useRef<MediaElementAudioSourceNode | null>(null)
 
 	const togglePlay = async () => {
-		console.log(track)
 		if (!audioContext.current || !audio.current) return
 		if (audioContext.current.state === 'suspended') await audioContext.current.resume()
 		setIsPlaying(prev => !prev)
