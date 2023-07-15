@@ -1,4 +1,4 @@
-import ProviderSignIn from '@/components/providerSignIn'
+import ProviderSignInButton from '@/components/providerSignInButton'
 import { getProviders } from 'next-auth/react'
 
 export default async function SignIn() {
@@ -11,7 +11,7 @@ export default async function SignIn() {
 			<legend className="p-1">
 				<h2>Sign In</h2>
 			</legend>
-			{providers?.google && <ProviderSignIn provider={providers.google} image={googleSignIn} />}
+			{providers?.google && <ProviderSignInButton provider={providers.google} image={googleSignIn} />}
 		</fieldset>
 	)
 }

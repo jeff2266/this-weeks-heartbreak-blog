@@ -142,11 +142,11 @@ export default async function Author() {
 				<div className="flex justify-end mx-0 lg:mx-8">
 					<div className="m-2">
 						<Link href="/">
-							<button type="button" className="bg-white hover:bg-slate-200 text-black p-2 rounded-sm">
+							<button type="button" className="bg-white hover:bg-slate-100 text-black p-2 rounded-sm">
 								Home
 							</button>
 						</Link>
-						<button className="bg-white hover:bg-slate-200 text-black rounded-sm p-2 mx-2">Submit</button>
+						<button className="bg-white hover:bg-slate-100 text-black rounded-sm p-2 mx-2">Submit</button>
 					</div>
 				</div>
 			</form>
