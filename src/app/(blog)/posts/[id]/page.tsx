@@ -5,6 +5,8 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import Image from 'next/image'
 import Link from 'next/link'
 import defaultImage from 'public/img/post-thumb-image-default.jpg'
+import heartEmpty from 'public/img/heart-empty.svg'
+import heartFilled from 'public/img/heart-filled.svg'
 
 export default async function Post({ params }: { params: { id: string } }) {
 	const post = await prisma.post.findUnique({
@@ -29,6 +31,12 @@ export default async function Post({ params }: { params: { id: string } }) {
 				<>
 					<h2>{post.title}</h2>
 					<Image src={imageUrl} alt="post image" width="800" height="600" />
+					<div className="w-5">
+						<Image src={heartEmpty} alt="like" />
+					</div>
+					<div className="w-5">
+						<Image src={heartFilled} alt="like" />
+					</div>
 					<p>{post.content}</p>
 					<p>{post.author.name}</p>
 					<p>{post.date.toLocaleString()}</p>
