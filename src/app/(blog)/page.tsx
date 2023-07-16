@@ -7,6 +7,7 @@ import SearchBar from '@/components/searchBar'
 import StaticTitle from '@/components/banner/staticTitle'
 import UserSignIn from '@/components/userSignIn'
 import Link from 'next/link'
+import HamburgerMenu from '@/components/hamburgerMenu'
 
 const POSTS_PER_PAGE = 8
 
@@ -52,14 +53,15 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
 
 	return (
 		<main className={`flex-col items-center p-6 md:p-12`}>
-			<div className="flex justify-between">
+			<div className="flex justify-center lg:justify-between">
 				<StaticTitle animate={true} />
-				<div className="flex items-center justify-end">
+				<nav className="hidden lg:flex items-center justify-end">
 					<SearchBar />
 					<UserSignIn />
-				</div>
+				</nav>
 			</div>
-			<div className="flex flex-wrap justify-start -m-2">
+			<HamburgerMenu />
+			<div className="flex flex-wrap justify-start -mx-2">
 				{signedPosts?.map(post => (
 					<PostThumb key={post.id} post={post} />
 				))}
