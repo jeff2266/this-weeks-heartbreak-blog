@@ -27,7 +27,14 @@ module.exports = {
 						transform: 'translateY(0)',
 						opacity: '1'
 					}
-
+				},
+				fadeIn: {
+					'0%': {
+						opacity: '0'
+					},
+					'100%': {
+						opacity: '1'
+					}
 				},
 				flicker: {
 					'0%': {

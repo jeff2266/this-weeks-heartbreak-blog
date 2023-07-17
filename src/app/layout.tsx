@@ -1,6 +1,6 @@
 import './globals.css'
 import { Rubik } from 'next/font/google'
-// import ClientProvider from '@/components/clientProvider'
+import ClientProvider from '@/components/clientProvider'
 
 const rubik = Rubik({ subsets: ['latin'] })
 
@@ -13,9 +13,9 @@ export const metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en" className="scroll-smooth antialiased">
-			{/* <ClientProvider> */}
-			<body className={rubik.className}>{children}</body>
-			{/* </ClientProvider> */}
+			<ClientProvider>
+				<body className={rubik.className}>{children}</body>
+			</ClientProvider>
 		</html>
 	)
 }

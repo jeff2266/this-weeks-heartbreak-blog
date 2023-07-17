@@ -52,26 +52,32 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
 	)
 
 	return (
-		<main className={`flex-col items-center p-6 md:p-12`}>
-			<div className="flex justify-center lg:justify-between">
-				<StaticTitle animate={true} />
-				<nav className="hidden lg:flex items-center justify-end">
-					<SearchBar />
-					<UserSignIn />
-				</nav>
-			</div>
-			<HamburgerMenu />
-			<div className="flex flex-wrap justify-start -mx-2">
-				{signedPosts?.map(post => (
-					<PostThumb key={post.id} post={post} />
-				))}
-			</div>
-			<div className="flex my-2">
-				{page > 1 && <Link href={`/?page=${page - 1}`}>{'< Prev'}</Link>}
-				<div className="grow"></div>
-				{page < totalPages && <Link href={`/?page=${page + 1}`}>{'Next >'}</Link>}
-			</div>
-			<div className="h-16"></div>
-		</main>
+		<>
+			<main className={`flex-col items-center`}>
+				<div className="px-6 py-2 md:px-12">
+					<div className="flex justify-center lg:justify-between">
+						<StaticTitle animate={true} />
+						<nav className="hidden lg:flex items-center justify-end">
+							<SearchBar />
+							<UserSignIn />
+						</nav>
+					</div>
+				</div>
+				<HamburgerMenu />
+				<div className="px-6 md:px-12">
+					<div className="flex flex-wrap justify-start -mx-2">
+						{signedPosts?.map(post => (
+							<PostThumb key={post.id} post={post} />
+						))}
+					</div>
+					<div className="flex my-2">
+						{page > 1 && <Link href={`/?page=${page - 1}`}>{'< Prev'}</Link>}
+						<div className="grow"></div>
+						{page < totalPages && <Link href={`/?page=${page + 1}`}>{'Next >'}</Link>}
+					</div>
+					<div className="h-16"></div>
+				</div>
+			</main>
+		</>
 	)
 }
