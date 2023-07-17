@@ -26,25 +26,36 @@ export default async function Post({ params }: { params: { id: string } }) {
 		: defaultImage
 
 	return (
-		<main className="flex-col items-center justify-between p-24">
+		<main className="flex-col items-center justify-between">
 			{post ? (
 				<>
-					<h2>{post.title}</h2>
-					<Image src={imageUrl} alt="post image" width="800" height="600" />
-					<div className="w-5">
-						<Image src={heartEmpty} alt="like" />
+					<div className="absolute flex justify-center w-full h-full -z-10">
+						<Image alt="post image" src={imageUrl} fill={true} style={{ objectFit: 'cover' }} sizes="100vw" />
 					</div>
-					<div className="w-5">
-						<Image src={heartFilled} alt="like" />
+					<div className="flex w-full px-6 md:px-12">
+						<div className="flex flex-col w-1/2 justify-end">
+							<Link href="/">Home</Link>
+							<div className="bg-white text-black">
+								<h2>{post.title}</h2>
+								<div className="w-5">
+									<Image src={heartEmpty} alt="like" />
+								</div>
+								<div className="w-5">
+									<Image src={heartFilled} alt="like" />
+								</div>
+								<p>{post.content}</p>
+							</div>
+							<div className="flex">
+								<p>{post.author.name}</p>
+								<p>&nbsp;{'♡'}&nbsp;</p>
+								<p>{post.date.toLocaleString()}</p>
+							</div>
+						</div>
 					</div>
-					<p>{post.content}</p>
-					<p>{post.author.name}</p>
-					<p>{post.date.toLocaleString()}</p>
 				</>
 			) : (
 				<p>Post not found...</p>
 			)}
-			<Link href="/">Home</Link>
 		</main>
 	)
 }
