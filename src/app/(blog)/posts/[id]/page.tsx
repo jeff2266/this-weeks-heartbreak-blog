@@ -7,6 +7,7 @@ import Link from 'next/link'
 import defaultImage from 'public/img/post-thumb-image-default.jpg'
 import heartEmpty from 'public/img/heart-empty.svg'
 import heartFilled from 'public/img/heart-filled.svg'
+import StaticTitle from '@/components/banner/staticTitle'
 
 export default async function Post({ params }: { params: { id: string } }) {
 	const post = await prisma.post.findUnique({
@@ -26,36 +27,50 @@ export default async function Post({ params }: { params: { id: string } }) {
 		: defaultImage
 
 	return (
-		<main className="flex-col items-center justify-between">
-			{post ? (
-				<>
-					<div className="absolute flex justify-center w-full h-full -z-10">
-						<Image alt="post image" src={imageUrl} fill={true} style={{ objectFit: 'cover' }} sizes="100vw" />
-					</div>
-					<div className="flex w-full px-6 md:px-12">
-						<div className="flex flex-col w-1/2 justify-end">
-							<Link href="/">Home</Link>
-							<div className="bg-white text-black">
-								<h2>{post.title}</h2>
-								<div className="w-5">
-									<Image src={heartEmpty} alt="like" />
+		<main className="flex justify-center w-full">
+			<div className="flex flex-col px-2 lg:p-4 w-full max-w-screen-2xl">
+				{post ? (
+					<>
+						<div className="flex flex-wrap items-center justify-between w-full py-2">
+							<Link className="grow flex justify-center" href="/">
+								<StaticTitle animate={true} />
+							</Link>
+							<div className="w-2/3 grow my-4">
+								<div className="border p-2 lg:p-4">
+									<div className="relative w-full pb-[55%]">
+										<Image
+											alt="post image"
+											src={imageUrl}
+											fill={true}
+											style={{ objectFit: 'cover' }}
+											sizes="100vw"
+										/>
+									</div>
 								</div>
-								<div className="w-5">
-									<Image src={heartFilled} alt="like" />
-								</div>
-								<p>{post.content}</p>
-							</div>
-							<div className="flex">
-								<p>{post.author.name}</p>
-								<p>&nbsp;{'♡'}&nbsp;</p>
-								<p>{post.date.toLocaleString()}</p>
 							</div>
 						</div>
-					</div>
-				</>
-			) : (
-				<p>Post not found...</p>
-			)}
+						<div className="flex w-full">
+							<div className="flex flex-col w-full justify-end">
+								<div className="bg-white text-black">
+									<h2>{post.title}</h2>
+									<div className="w-5">
+										<Image src={heartEmpty} alt="like" />
+									</div>
+									<div className="w-5">
+										<Image src={heartFilled} alt="like" />
+									</div>
+									<p>{post.content}</p>
+								</div>
+								<div className="flex">
+									<p>{`${post.author.name} ♡ ${post.date.toLocaleString()}`}</p>
+								</div>
+							</div>
+						</div>
+					</>
+				) : (
+					<p>Post not found...</p>
+				)}
+			</div>
 		</main>
 	)
 }
