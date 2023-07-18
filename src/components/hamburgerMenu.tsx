@@ -42,9 +42,9 @@ export default function HamburgerMenu() {
 							className={`${
 								isExpanded ? 'border-b-[1px]' : 'border-t-[1px]'
 							} flex w-full bg-black border-slate-400 items-center h-5 py-[0.25rem]`}>
-							<div className="relative w-full h-full" onClick={() => setIsExpanded(prev => !prev)}>
+							<button className="relative w-full h-full" onClick={() => setIsExpanded(prev => !prev)}>
 								<Image src={hamburger} alt="menu" fill={true} />
-							</div>
+							</button>
 						</span>
 					</div>
 				</div>
@@ -55,9 +55,10 @@ export default function HamburgerMenu() {
 				</span>
 			</div>
 			<div
-				className={`w-full h-full absolute filter backdrop-blur-md bg-black/10 lg:hidden ${
+				className={`w-full h-screen absolute top-0 left-0 filter backdrop-blur-md bg-black/10 lg:hidden ${
 					isExpanded ? 'animate-[fadeIn_0.2s] block' : 'hidden'
-				} z-10`}></div>
+				} z-10`}
+				onClick={() => setIsExpanded(false)}></div>
 		</>
 	)
 }
