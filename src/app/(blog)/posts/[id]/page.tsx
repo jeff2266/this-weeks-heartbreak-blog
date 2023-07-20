@@ -2,6 +2,8 @@ import { prisma } from '@/db'
 import { s3 } from '@/s3'
 import { GetObjectCommand } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import Image from 'next/image'
 import Link from 'next/link'
 import defaultImage from 'public/img/post-thumb-image-default.jpg'
@@ -10,6 +12,8 @@ import heartFilled from 'public/img/heart-filled.svg'
 import StaticTitle from '@/components/banner/staticTitle'
 
 export default async function Post({ params }: { params: { id: string } }) {
+	const session = await getServerSession(authOptions)
+
 	const post = await prisma.post.findUnique({
 		where: {
 			id: params.id
@@ -26,12 +30,20 @@ export default async function Post({ params }: { params: { id: string } }) {
 		  })
 		: defaultImage
 
+	const like =
+		session?.user.userId &&
+		(await prisma.like.findFirst({
+			where: {
+				AND: [{ userId: session.user.userId }, { postId: params.id }]
+			}
+		}))
+
 	return (
 		<main className="flex justify-center w-full">
-			<div className="flex flex-col px-2 lg:p-4 w-full max-w-screen-2xl">
+			<div className="flex flex-col px-2 lg:p-6 w-full max-w-screen-2xl">
 				{post ? (
 					<>
-						<div className="flex flex-wrap items-center justify-between w-full py-2">
+						<div className="flex flex-col lg:flex-row items-center justify-between w-full py-2">
 							<Link className="grow flex justify-center" href="/">
 								<StaticTitle animate={true} />
 							</Link>
@@ -52,12 +64,15 @@ export default async function Post({ params }: { params: { id: string } }) {
 						<div className="flex w-full">
 							<div className="flex flex-col w-full justify-end">
 								<div className="bg-white text-black">
-									<h2>{post.title}</h2>
-									<div className="w-5">
-										<Image src={heartEmpty} alt="like" />
-									</div>
-									<div className="w-5">
-										<Image src={heartFilled} alt="like" />
+									<div className="flex min-w-fit items-center">
+										<h2>{post.title}</h2>
+										<div className="w-5 mx-2">
+											{like ? (
+												<Image src={heartFilled} alt="like" />
+											) : (
+												<Image src={heartEmpty} alt="like" />
+											)}
+										</div>
 									</div>
 									<p>{post.content}</p>
 								</div>
