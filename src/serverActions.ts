@@ -4,16 +4,16 @@ import { Like } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 import { prisma } from './db'
 
-export async function handleLike({ postId, userId }: Like, like: boolean) {
-	if (like) {
+export async function handleLike(isLike: boolean, like: Like) {
+	if (isLike) {
 		await prisma.like.delete({
 			where: {
-				postId_userId: { postId, userId }
+				postId_userId: { ...like }
 			}
 		})
 	} else {
 		await prisma.like.create({
-			data: { postId, userId }
+			data: { ...like }
 		})
 	}
 	revalidatePath('/posts/[id]')

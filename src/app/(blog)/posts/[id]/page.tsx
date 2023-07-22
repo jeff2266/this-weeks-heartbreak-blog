@@ -4,6 +4,7 @@ import { GetObjectCommand } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import heartEmpty from 'public/img/heart-empty.svg'
 import Image from 'next/image'
 import Link from 'next/link'
 import defaultImage from 'public/img/post-thumb-image-default.jpg'
@@ -66,8 +67,12 @@ export default async function Post({ params }: { params: { id: string } }) {
 						<div className="grow w-full bg-white text-black px-2 md:px-4 py-4">
 							<div className="flex min-w-fit items-center mb-2">
 								<h2 className="font-semibold">{post.title}</h2>
-								{session?.user.userId && (
-									<LikeButton postId={params.id} userId={session.user.userId} like={!!like} />
+								{session ? (
+									<LikeButton isLike={!!like} like={{ postId: params.id, userId: session.user.userId }} />
+								) : (
+									<Link className="w-5 mx-2" href="/api/auth/signin">
+										<Image src={heartEmpty} alt="like" />
+									</Link>
 								)}
 							</div>
 							<p>{post.content}</p>
