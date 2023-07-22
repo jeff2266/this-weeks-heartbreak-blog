@@ -32,7 +32,7 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
 		dbPosts.map(async dbPost => ({
 			id: dbPost.id,
 			title: dbPost.title,
-			author: dbPost.author.name ? dbPost.author.name : undefined,
+			authorName: dbPost.author.name ?? undefined,
 			date: dbPost.date,
 			thumbUrl: dbPost.thumb
 				? await getSignedUrl(
