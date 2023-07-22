@@ -7,9 +7,8 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import Image from 'next/image'
 import Link from 'next/link'
 import defaultImage from 'public/img/post-thumb-image-default.jpg'
-import heartEmpty from 'public/img/heart-empty.svg'
-import heartFilled from 'public/img/heart-filled.svg'
 import StaticTitle from '@/components/banner/staticTitle'
+import LikeButton from '@/components/likeButton'
 
 export default async function Post({ params }: { params: { id: string } }) {
 	const session = await getServerSession(authOptions)
@@ -30,17 +29,20 @@ export default async function Post({ params }: { params: { id: string } }) {
 		  })
 		: defaultImage
 
-	const like =
-		session?.user.userId &&
-		(await prisma.like.findFirst({
-			where: {
-				AND: [{ userId: session.user.userId }, { postId: params.id }]
-			}
-		}))
+	const like = session?.user.userId
+		? await prisma.like.findUnique({
+				where: {
+					postId_userId: {
+						postId: params.id,
+						userId: session.user.userId
+					}
+				}
+		  })
+		: null
 
 	return (
 		<main className="flex justify-center w-full">
-			<div className="flex flex-col px-2 lg:p-6 w-full max-w-screen-2xl">
+			<div className="flex flex-col px-2 lg:p-6 w-full min-h-[65svh] max-w-screen-2xl">
 				{post ? (
 					<>
 						<div className="flex flex-col lg:flex-row items-center justify-between w-full py-2">
@@ -61,25 +63,17 @@ export default async function Post({ params }: { params: { id: string } }) {
 								</div>
 							</div>
 						</div>
-						<div className="flex w-full">
-							<div className="flex flex-col w-full justify-end">
-								<div className="bg-white text-black">
-									<div className="flex min-w-fit items-center">
-										<h2>{post.title}</h2>
-										<div className="w-5 mx-2">
-											{like ? (
-												<Image src={heartFilled} alt="like" />
-											) : (
-												<Image src={heartEmpty} alt="like" />
-											)}
-										</div>
-									</div>
-									<p>{post.content}</p>
-								</div>
-								<div className="flex">
-									<p>{`${post.author.name} ♡ ${post.date.toLocaleString()}`}</p>
-								</div>
+						<div className="grow w-full bg-white text-black px-2 md:px-4 py-4">
+							<div className="flex min-w-fit items-center mb-2">
+								<h2 className="font-semibold">{post.title}</h2>
+								{session?.user.userId && (
+									<LikeButton postId={params.id} userId={session.user.userId} like={!!like} />
+								)}
 							</div>
+							<p>{post.content}</p>
+						</div>
+						<div className="flex py-1">
+							<p>{`${post.author.name} • ${post.date.toLocaleString()}`}</p>
 						</div>
 					</>
 				) : (
