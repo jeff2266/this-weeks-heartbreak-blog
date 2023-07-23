@@ -1,7 +1,12 @@
 export default function SearchBar() {
 	return (
-		<form className="flex justify-end">
-			<input name="search" className="bg-inherit border-b outline-none cursor-text mx-2" placeholder="Search..." />
+		<form className="flex justify-end" action={`/search`}>
+			<input
+				name="query"
+				className="bg-inherit border-b outline-none cursor-text mx-2"
+				placeholder="Search..."
+				maxLength={60}
+			/>
 			<button>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

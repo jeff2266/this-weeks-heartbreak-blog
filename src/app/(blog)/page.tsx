@@ -9,7 +9,7 @@ import UserSignIn from '@/components/userSignIn'
 import Link from 'next/link'
 import HamburgerMenu from '@/components/hamburgerMenu'
 
-export const POSTS_PER_PAGE = 8
+const POSTS_PER_PAGE = 8
 
 export default async function Home({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
 	const totalPages = Math.ceil((await prisma.post.count()) / POSTS_PER_PAGE)
