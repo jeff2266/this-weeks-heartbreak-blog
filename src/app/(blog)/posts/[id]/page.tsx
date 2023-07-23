@@ -56,13 +56,6 @@ export default async function Post({ params: { id } }: { params: { id: string } 
 								<div className="border rounded-sm p-2 lg:p-4">
 									<div className="relative w-full">
 										<PostThumbImage params={{ ...post, thumbUrl, mediaUrl }} />
-										{/* <Image
-											alt="post image"
-											src={thumbUrl}
-											fill={true}
-											style={{ objectFit: 'cover' }}
-											sizes="100vw"
-										/> */}
 									</div>
 								</div>
 							</div>

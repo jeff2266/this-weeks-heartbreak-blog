@@ -25,7 +25,7 @@ export default function PostThumbImage({ params: { id, title, thumbUrl, mediaUrl
 		}
 	}
 	return mediaUrl ? (
-		<div className="w-full pb-[55%] relative group hover:cursor-pointer" onClick={onClick}>
+		<div className="w-full pb-[55%] relative group hover:cursor-pointer">
 			<Image
 				src={thumbUrl ?? defaultImage}
 				alt="thumb image"
@@ -33,7 +33,9 @@ export default function PostThumbImage({ params: { id, title, thumbUrl, mediaUrl
 				style={{ objectFit: 'cover' }}
 				sizes="100vw"
 			/>
-			<div className="w-full h-full invisible group-hover:visible flex justify-center align-middle absolute filter backdrop-blur-md bg-black/10 opacity-95 z-10">
+			<div
+				className="flex w-1/6 md:w-full h-1/5 md:h-full md:invisible md:group-hover:visible justify-center align-middle rounded-tl-sm md:rounded-none absolute bottom-0 right-0 filter backdrop-blur-md bg-black/20  opacity-95 z-10"
+				onClick={onClick}>
 				<div className="w-1/4 relative">
 					{isPlaying && track?.id === id ? (
 						<Image src={pause} alt="pause" fill={true} sizes="100vw" />
