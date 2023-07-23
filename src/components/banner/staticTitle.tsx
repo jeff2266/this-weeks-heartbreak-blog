@@ -13,7 +13,7 @@ export default function StaticTitle({ animate }: { animate: boolean }) {
 				animate && 'animate-[flicker_2s_ease_infinite]'
 			}`}>
 			<span
-				className={`flex items-baseline text-xl lg:text-2xl ${
+				className={`flex items-center text-xl lg:text-2xl ${
 					animate ? 'animate-[textShadow_0.7s_infinite] select-none' : ''
 				}`}>
 				<p className="block lg:hidden">{'♡'}&nbsp;</p>

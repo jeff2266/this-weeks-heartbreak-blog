@@ -5,7 +5,9 @@ import Player from '@/components/player/player'
 export default async function BlogLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<PlayerContextProvider>
-			{children}
+			<main className={`flex-col items-center`}>
+				<div className="px-6 py-2 md:px-12">{children}</div>
+			</main>
 			<Player />
 		</PlayerContextProvider>
 	)

@@ -10,7 +10,6 @@ import Link from 'next/link'
 import defaultImage from 'public/img/post-thumb-image-default.jpg'
 import StaticTitle from '@/components/banner/staticTitle'
 import LikeButton from '@/components/likeButton'
-import PostThumb from '@/components/postThumb'
 import PostThumbImage from '@/components/postThumbImage'
 
 export default async function Post({ params: { id } }: { params: { id: string } }) {
@@ -46,44 +45,42 @@ export default async function Post({ params: { id } }: { params: { id: string } 
 		: null
 
 	return (
-		<main className="flex justify-center min-w-fit w-full">
-			<div className="flex flex-col px-2 lg:p-6 w-full min-h-[65svh] max-w-screen-2xl">
-				{post ? (
-					<>
-						<div className="flex flex-col lg:flex-row items-center justify-between w-full py-2">
-							<div className="mx-6">
-								<StaticTitle animate={true} />
-							</div>
-							<div className="w-2/3 grow my-4">
-								<div className="border rounded-sm p-2 lg:p-4">
-									<div className="relative w-full">
-										<PostThumbImage params={{ ...post, thumbUrl, mediaUrl }} />
-									</div>
+		<div className="flex flex-col px-2 lg:p-6 w-full min-h-[65svh] max-w-screen-2xl">
+			{post ? (
+				<>
+					<div className="flex flex-col lg:flex-row items-center justify-between w-full py-2">
+						<div className="mx-6">
+							<StaticTitle animate={true} />
+						</div>
+						<div className="w-2/3 grow my-4">
+							<div className="border rounded-sm p-2 lg:p-4">
+								<div className="relative w-full">
+									<PostThumbImage params={{ ...post, thumbUrl, mediaUrl }} />
 								</div>
 							</div>
 						</div>
-						<div className="grow w-full bg-white text-black px-2 md:px-4 py-4">
-							<div className="flex min-w-fit items-center mb-2">
-								<h2 className="font-semibold">{post.title}</h2>
-								{session ? (
-									<LikeButton isLike={!!like} like={{ postId: id, userId: session.user.userId }} />
-								) : (
-									<Link className="w-5 mx-2" href="/api/auth/signin">
-										<Image src={heartEmpty} alt="like" />
-									</Link>
-								)}
-							</div>
-							<p>{post.content}</p>
+					</div>
+					<div className="grow w-full bg-white text-black px-2 md:px-4 py-4">
+						<div className="flex min-w-fit items-center mb-2">
+							<h2 className="font-semibold">{post.title}</h2>
+							{session ? (
+								<LikeButton isLike={!!like} like={{ postId: id, userId: session.user.userId }} />
+							) : (
+								<Link className="w-5 mx-2" href="/api/auth/signin">
+									<Image src={heartEmpty} alt="like" />
+								</Link>
+							)}
 						</div>
-						<div className="flex py-1 text-sm">
-							<p>{`${post.author.name} • ${post.date.toLocaleString()}`}</p>
-						</div>
-					</>
-				) : (
-					<p>Post not found...</p>
-				)}
-				<div className="h-16"></div>
-			</div>
-		</main>
+						<p>{post.content}</p>
+					</div>
+					<div className="flex py-1 text-sm">
+						<p>{`${post.author.name} • ${post.date.toLocaleString()}`}</p>
+					</div>
+				</>
+			) : (
+				<p>Post not found...</p>
+			)}
+			<div className="h-16"></div>
+		</div>
 	)
 }

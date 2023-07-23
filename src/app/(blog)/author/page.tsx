@@ -103,11 +103,11 @@ export default async function Author() {
 	}
 
 	return (
-		<main className="flex-col items-center justify-between px-4 py-8">
+		<>
 			<h2 className="my-8">Post</h2>
 			<form className="min-w-fit" action={submit}>
-				<div className="flex my-2 mx-0 lg:mx-8">
-					<div className="flex flex-col m-4 w-2/5 min-w-fit">
+				<div className="flex flex-wrap gap-x-4 justify-between w-full my-2">
+					<div className="grow flex flex-col min-w-fit">
 						<label htmlFor="title">Title</label>
 						<input
 							id="title"
@@ -116,7 +116,7 @@ export default async function Author() {
 							maxLength={50}
 							required
 						/>
-						<div className="flex flex-col h-full my-2">
+						<div className="flex flex-col h-full min-h-[8rem] my-2">
 							<label htmlFor="content">Content</label>
 							<textarea
 								id="content"
@@ -125,7 +125,7 @@ export default async function Author() {
 							/>
 						</div>
 					</div>
-					<div className="flex flex-col m-4 w-3/5 min-w-fit">
+					<div className="grow flex flex-col min-w-fit">
 						<ImageSelect thumbs={thumbs} />
 						<div className="flex flex-col my-2">
 							<label htmlFor="media-file">Media</label>
@@ -139,17 +139,15 @@ export default async function Author() {
 						</div>
 					</div>
 				</div>
-				<div className="flex justify-end mx-0 lg:mx-8">
-					<div className="m-2">
-						<Link href="/">
-							<button type="button" className="bg-white hover:bg-slate-100 text-black p-2 rounded-sm">
-								Home
-							</button>
-						</Link>
-						<button className="bg-white hover:bg-slate-100 text-black rounded-sm p-2 mx-2">Submit</button>
-					</div>
+				<div className="flex justify-end">
+					<Link href="/" className="me-2">
+						<div className="bg-white hover:bg-slate-100 text-black hover:text-sky-800 p-2 rounded-sm">Home</div>
+					</Link>
+					<button className="bg-white hover:bg-slate-100 text-black hover:text-sky-800 rounded-sm p-2 mb-2">
+						Submit
+					</button>
 				</div>
 			</form>
-		</main>
+		</>
 	)
 }

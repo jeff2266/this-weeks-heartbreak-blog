@@ -8,7 +8,7 @@ export default function SearchBar() {
 					xmlnsXlink="http://www.w3.org/1999/xlink"
 					className="fill-gray-400 hover:fill-white"
 					viewBox="0,0,256,256"
-					height="1.5em">
+					height="1.5rem">
 					<path
 						strokeWidth="0.25"
 						strokeLinecap="butt"
