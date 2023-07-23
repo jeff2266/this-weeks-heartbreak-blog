@@ -46,12 +46,14 @@ export default async function Post({ params: { id } }: { params: { id: string } 
 		: null
 
 	return (
-		<main className="flex justify-center w-full">
+		<main className="flex justify-center min-w-fit w-full">
 			<div className="flex flex-col px-2 lg:p-6 w-full min-h-[65svh] max-w-screen-2xl">
 				{post ? (
 					<>
 						<div className="flex flex-col lg:flex-row items-center justify-between w-full py-2">
-							<StaticTitle animate={true} />
+							<div className="mx-6">
+								<StaticTitle animate={true} />
+							</div>
 							<div className="w-2/3 grow my-4">
 								<div className="border rounded-sm p-2 lg:p-4">
 									<div className="relative w-full">

@@ -12,13 +12,15 @@ export default function HamburgerMenu() {
 	return (
 		<>
 			<div className="px-6 md:px-12 lg:hidden">
-				<div className={`h-0 relative z-20 w-full`}>
+				<div className={`h-0 relative z-30 w-full`}>
 					<div className="bg-black">
 						{isExpanded && (
 							<ul className="flex flex-col items-center px-4 py-2 list-none">
 								{session ? (
 									<>
-										<li className="cursor-default">Likes</li>
+										<li>
+											<Link href="/likes">Likes</Link>
+										</li>
 										{(session.user.role === 'ADMIN' || session.user.role === 'AUTHOR') && (
 											<li>
 												<Link href="/author">Post</Link>
@@ -57,7 +59,7 @@ export default function HamburgerMenu() {
 			<div
 				className={`w-full h-screen absolute top-0 left-0 filter backdrop-blur-md bg-black/10 lg:hidden ${
 					isExpanded ? 'animate-[fadeIn_0.2s] block' : 'hidden'
-				} z-10`}
+				} z-20`}
 				onClick={() => setIsExpanded(false)}></div>
 		</>
 	)

@@ -9,7 +9,7 @@ export default function StaticTitle({ animate }: { animate: boolean }) {
 	return (
 		<Link
 			href="/"
-			className={`${notoSansMono.className} min-w-max lg:min-w-min mx-6 my-2 lg:my-4 ${
+			className={`${notoSansMono.className} min-w-max lg:min-w-min my-2 lg:my-4 ${
 				animate && 'animate-[flicker_2s_ease_infinite]'
 			}`}>
 			<span

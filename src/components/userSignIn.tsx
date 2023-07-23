@@ -18,7 +18,9 @@ export default async function UserSignIn() {
 				<ul className="text-right list-none">
 					{session ? (
 						<>
-							<li className="cursor-default">Likes</li>
+							<li>
+								<Link href="/likes">Likes</Link>
+							</li>
 							{(session.user.role === 'ADMIN' || session.user.role === 'AUTHOR') && (
 								<li>
 									<Link href="/author">Post</Link>

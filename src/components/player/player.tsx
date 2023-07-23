@@ -92,7 +92,7 @@ export default function Player() {
 				}}
 			/>
 			{track && (
-				<span className="w-full z-10 flex flex-nowrap justify-center text-xs md:text-sm 2xl:text-base py-1.5 md:py-2 px-1 fixed bottom-0 select-none bg-inherit animate-[slideUp_0.5s_ease_1]">
+				<span className="w-full z-30 flex flex-nowrap justify-center text-xs md:text-sm 2xl:text-base py-1.5 md:py-2 px-1 fixed bottom-0 select-none bg-inherit animate-[slideUp_0.5s_ease_1]">
 					<div className="grid grid-rows-4 grid-cols-12 w-full md:w-3/4 lg:w-1/2">
 						<div className="row-start-2 col-start-1 row-span-3 col-span-1 md:mx-2 place-items-center flex justify-end">
 							<PlayToggle playState={isPlaying} togglePlay={togglePlay} />
