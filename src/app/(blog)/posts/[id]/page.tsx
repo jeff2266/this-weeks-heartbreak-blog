@@ -55,7 +55,7 @@ export default async function Post({ params: { id } }: { params: { id: string } 
 						<div className="w-2/3 grow my-4">
 							<div className="border rounded-sm p-2 lg:p-4">
 								<div className="relative w-full">
-									<PostThumbImage params={{ ...post, thumbUrl, mediaUrl }} />
+									<PostThumbImage params={{ post: { ...post, thumbUrl, mediaUrl }, responsive: true }} />
 								</div>
 							</div>
 						</div>

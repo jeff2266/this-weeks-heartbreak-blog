@@ -7,13 +7,18 @@ import play from 'public/img/play.svg'
 import defaultImage from 'public/img/post-thumb-image-default.jpg'
 
 type Params = {
-	id: string
-	title: string
-	thumbUrl?: string | StaticImageData
-	mediaUrl?: string
+	post: { id: string; title: string; thumbUrl?: string | StaticImageData; mediaUrl?: string }
+	responsive: boolean
 }
 
-export default function PostThumbImage({ params: { id, title, thumbUrl, mediaUrl } }: { params: Params }) {
+export default function PostThumbImage({
+	params: {
+		post: { id, title, thumbUrl, mediaUrl },
+		responsive
+	}
+}: {
+	params: Params
+}) {
 	const { track, setTrack, isPlaying, setIsPlaying } = usePlayerContext()
 
 	const onClick = () => {
@@ -34,7 +39,11 @@ export default function PostThumbImage({ params: { id, title, thumbUrl, mediaUrl
 				sizes="100vw"
 			/>
 			<div
-				className="flex w-1/6 md:w-full h-1/5 md:h-full md:invisible hover:cursor-pointer md:group-hover:visible justify-center align-middle rounded-tl-sm md:rounded-none absolute bottom-0 right-0 filter backdrop-blur-md bg-black/20  opacity-95 z-10"
+				className={
+					responsive
+						? 'flex w-1/6 md:w-full h-1/5 md:h-full md:invisible hover:cursor-pointer md:group-hover:visible justify-center align-middle rounded-tl-sm md:rounded-none absolute bottom-0 right-0 filter backdrop-blur-md bg-black/20 opacity-95 z-10'
+						: 'flex w-1/3 md:w-full h-1/2 md:h-full md:invisible hover:cursor-pointer md:group-hover:visible justify-center align-middle rounded-tl-sm md:rounded-none absolute bottom-0 right-0 filter backdrop-blur-md bg-black/20 opacity-95 z-10'
+				}
 				onClick={onClick}>
 				<div className="w-1/4 relative">
 					{isPlaying && track?.id === id ? (
@@ -46,7 +55,7 @@ export default function PostThumbImage({ params: { id, title, thumbUrl, mediaUrl
 			</div>
 		</div>
 	) : (
-		<div className="w-full pb-[55%] relative group">
+		<div className="w-full pb-[55%] relative">
 			<Image
 				src={thumbUrl ?? defaultImage}
 				alt="thumb image"

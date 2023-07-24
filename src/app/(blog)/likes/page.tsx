@@ -76,15 +76,18 @@ export default async function Likes({ searchParams }: { searchParams: { [key: st
 			<HamburgerMenu />
 			<div className="flex justify-center w-full">
 				<div className="flex flex-col items-center w-full max-w-screen-md">
-					<h2>Liked Posts</h2>
+					<h2 className="my-4">Liked Posts</h2>
 					{signedPosts?.map(post => (
-						<div className="flex w-full">
-							<PostThumbImage params={{ ...post }} />
-							<Link href={`posts/${post.id}`}>
+						<div className="flex w-full p-2 border rounded-sm mb-2 min-w-max">
+							<div className="w-1/4">
+								<PostThumbImage params={{ post, responsive: false }} />
+							</div>
+							<Link href={`posts/${post.id}`} className="grow flex flex-col justify-between mx-2">
 								<h3>{post.title}</h3>
 								<div className="flex text-sm">
-									<p>{post.authorName}</p>
-									<p>{new Date(post.date).toLocaleDateString('en-US', { dateStyle: 'short' })}</p>
+									<p>{`${post.authorName} • ${new Date(post.date).toLocaleDateString('en-US', {
+										dateStyle: 'short'
+									})}`}</p>
 								</div>
 							</Link>
 						</div>
