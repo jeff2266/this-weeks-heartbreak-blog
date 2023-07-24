@@ -2,10 +2,10 @@
 
 import { handleLike } from '@/serverActions'
 import { Like } from '@prisma/client'
+import { useState } from 'react'
 import Image from 'next/image'
 import heartEmpty from 'public/img/heart-empty.svg'
 import heartFilled from 'public/img/heart-filled.svg'
-import { useState } from 'react'
 
 export default function LikeButton({ isLike, like }: { isLike: boolean; like: Like }) {
 	const [pending, setPending] = useState(false)

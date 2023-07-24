@@ -6,8 +6,7 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import crypto from 'crypto'
-import Link from 'next/link'
-import ImageSelect from '@/components/imageSelect'
+import AuthorForm from '@/components/authorForm'
 
 export default async function Author() {
 	const session = await getServerSession(authOptions)
@@ -99,55 +98,14 @@ export default async function Author() {
 			if (e instanceof Error) throw new Error(`Error saving new post record, ${e.message}`)
 			throw e
 		}
+		await new Promise(resolve => setTimeout(resolve, 3000))
 		redirect(`/posts/${post.id}`)
 	}
 
 	return (
 		<>
 			<h2 className="my-8">Post</h2>
-			<form className="min-w-fit" action={submit}>
-				<div className="flex flex-wrap gap-x-4 justify-between w-full my-2">
-					<div className="grow flex flex-col min-w-fit">
-						<label htmlFor="title">Title</label>
-						<input
-							id="title"
-							name="title"
-							className="bg-inherit border-b outline-none cursor-text"
-							maxLength={50}
-							required
-						/>
-						<div className="flex flex-col h-full min-h-[8rem] my-2">
-							<label htmlFor="content">Content</label>
-							<textarea
-								id="content"
-								name="content"
-								className="bg-inherit border outline-none cursor-text resize-none p-2 h-full"
-							/>
-						</div>
-					</div>
-					<div className="grow flex flex-col min-w-fit">
-						<ImageSelect thumbs={thumbs} />
-						<div className="flex flex-col my-2">
-							<label htmlFor="media-file">Media</label>
-							<input
-								type="file"
-								name="media-file"
-								id="media-file"
-								accept="audio/mpeg"
-								className="bg-inherit border-b"
-							/>
-						</div>
-					</div>
-				</div>
-				<div className="flex justify-end">
-					<Link href="/" className="me-2">
-						<div className="bg-white hover:bg-slate-100 text-black hover:text-sky-800 p-2 rounded-sm">Home</div>
-					</Link>
-					<button className="bg-white hover:bg-slate-100 text-black hover:text-sky-800 rounded-sm p-2 mb-2">
-						Submit
-					</button>
-				</div>
-			</form>
+			<AuthorForm params={{ thumbs, submit }} />
 		</>
 	)
 }
