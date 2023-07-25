@@ -1,7 +1,9 @@
 'use client'
 
 import { usePlayerContext } from './player/playerContext'
+import { useState } from 'react'
 import Image, { StaticImageData } from 'next/image'
+import loading from 'public/img/loading.svg'
 import pause from 'public/img/pause.svg'
 import play from 'public/img/play.svg'
 import defaultImage from 'public/img/post-thumb-image-default.jpg'
@@ -20,6 +22,7 @@ export default function PostThumbImage({
 	params: Params
 }) {
 	const { track, setTrack, isPlaying, setIsPlaying } = usePlayerContext()
+	const [imageLoading, setImageLoading] = useState(true)
 
 	const onClick = () => {
 		if (track?.id === id) {
@@ -29,7 +32,7 @@ export default function PostThumbImage({
 			setIsPlaying(true)
 		}
 	}
-	return mediaUrl ? (
+	return (
 		<div className="w-full pb-[55%] relative group">
 			<Image
 				src={thumbUrl ?? defaultImage}
@@ -37,32 +40,37 @@ export default function PostThumbImage({
 				fill={true}
 				style={{ objectFit: 'cover' }}
 				sizes="100vw"
+				onLoad={() => setImageLoading(false)}
 			/>
-			<div
-				className={
-					responsive
-						? 'flex w-1/6 md:w-full h-1/5 md:h-full md:invisible hover:cursor-pointer md:group-hover:visible justify-center align-middle rounded-tl-sm md:rounded-none absolute bottom-0 right-0 filter backdrop-blur-md bg-black/20 opacity-95 z-10'
-						: 'flex w-1/3 md:w-full h-1/2 md:h-full md:invisible hover:cursor-pointer md:group-hover:visible justify-center align-middle rounded-tl-sm md:rounded-none absolute bottom-0 right-0 filter backdrop-blur-md bg-black/20 opacity-95 z-10'
-				}
-				onClick={onClick}>
-				<div className="w-1/4 relative">
-					{isPlaying && track?.id === id ? (
-						<Image src={pause} alt="pause" fill={true} sizes="100vw" />
-					) : (
-						<Image src={play} alt="play" fill={true} sizes="100vw" />
-					)}
+			{mediaUrl ? (
+				<div
+					className={
+						imageLoading
+							? 'flex w-full h-full justify-center align-middle absolute filter backdrop-blur-md bg-black/20 opacity-95 z-10'
+							: responsive
+							? 'flex w-1/6 md:w-full h-1/5 md:h-full md:invisible hover:cursor-pointer md:group-hover:visible justify-center align-middle rounded-tl-sm md:rounded-none absolute bottom-0 right-0 filter backdrop-blur-md bg-black/20 opacity-95 z-10'
+							: 'flex w-1/3 md:w-full h-1/2 md:h-full md:invisible hover:cursor-pointer md:group-hover:visible justify-center align-middle rounded-tl-sm md:rounded-none absolute bottom-0 right-0 filter backdrop-blur-md bg-black/20 opacity-95 z-10'
+					}
+					onClick={onClick}>
+					<div className="w-1/4 relative">
+						{imageLoading ? (
+							<Image alt="loading" src={loading} fill={true} sizes="100vw" />
+						) : isPlaying && track?.id === id ? (
+							<Image src={pause} alt="pause" fill={true} sizes="100vw" />
+						) : (
+							<Image src={play} alt="play" fill={true} sizes="100vw" />
+						)}
+					</div>
 				</div>
-			</div>
-		</div>
-	) : (
-		<div className="w-full pb-[55%] relative">
-			<Image
-				src={thumbUrl ?? defaultImage}
-				alt="thumb image"
-				fill={true}
-				style={{ objectFit: 'cover' }}
-				sizes="100vw"
-			/>
+			) : (
+				imageLoading && (
+					<div className="flex w-full h-full justify-center align-middle absolute filter backdrop-blur-md bg-black/20 opacity-95 z-10">
+						<div className="w-1/4 relative">
+							<Image alt="loading" src={loading} fill={true} sizes="100vw" />
+						</div>
+					</div>
+				)
+			)}
 		</div>
 	)
 }
