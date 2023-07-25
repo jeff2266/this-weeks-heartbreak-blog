@@ -3,17 +3,19 @@ import { prisma } from '@/db'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { GetObjectCommand } from '@aws-sdk/client-s3'
 import { getServerSession } from 'next-auth'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import SearchBar from '@/components/searchBar'
 import StaticTitle from '@/components/banner/staticTitle'
 import UserSignIn from '@/components/userSignIn'
 import Link from 'next/link'
 import HamburgerMenu from '@/components/hamburgerMenu'
 import PostThumbImage from '@/components/postThumbImage'
+import LikeButton from '@/components/likeButton'
 
 const POSTS_PER_PAGE = 16
 
 export default async function Likes({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
-	const session = await getServerSession()
+	const session = await getServerSession(authOptions)
 	const totalPages = Math.ceil((await prisma.post.count()) / POSTS_PER_PAGE)
 	const pageParamStr = searchParams['page']
 	let pageParamNum = 1
@@ -75,21 +77,33 @@ export default async function Likes({ searchParams }: { searchParams: { [key: st
 			</div>
 			<HamburgerMenu />
 			<div className="flex justify-center w-full">
-				<div className="flex flex-col items-center w-full max-w-screen-md">
+				<div className="flex flex-col items-center w-full max-w-screen-sm">
 					<h2 className="my-4">Liked Posts</h2>
 					{signedPosts?.map(post => (
 						<div className="flex w-full p-2 border rounded-sm mb-2 min-w-max">
-							<div className="w-1/4">
+							<div className="w-1/3">
 								<PostThumbImage params={{ post, responsive: false }} />
 							</div>
-							<Link href={`posts/${post.id}`} className="grow flex flex-col justify-between mx-2">
-								<h3>{post.title}</h3>
+							<div className="grow flex flex-col mx-2">
+								<div className="w-full flex justify-between items-center mb-2">
+									<Link href={`posts/${post.id}`}>
+										<h3>{post.title}</h3>
+									</Link>
+									<LikeButton
+										params={{
+											fill: '#FFF',
+											like: !!session
+												? { postId: post.id, userId: session.user.userId, isLike: true }
+												: undefined
+										}}
+									/>
+								</div>
 								<div className="flex text-sm">
 									<p>{`${post.authorName} • ${new Date(post.date).toLocaleDateString('en-US', {
 										dateStyle: 'short'
 									})}`}</p>
 								</div>
-							</Link>
+							</div>
 						</div>
 					))}
 					<div className="flex my-2">

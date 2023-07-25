@@ -57,15 +57,15 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
 				</nav>
 			</div>
 			<HamburgerMenu />
-			<div className="flex flex-wrap justify-start -mx-2">
+			<div className="flex flex-wrap justify-start -mx-2 mt-2">
 				{signedPosts?.map(post => (
 					<PostThumb key={post.id} post={post} />
 				))}
 			</div>
 			<div className="flex my-2">
-				{page > 1 && <Link href={`/?page=${page - 1}`}>{'< Prev'}</Link>}
+				{page > 1 && <Link href={`/?page=${page - 1}`}>{'◂ Prev'}</Link>}
 				<div className="grow"></div>
-				{page < totalPages && <Link href={`/?page=${page + 1}`}>{'Next >'}</Link>}
+				{page < totalPages && <Link href={`/?page=${page + 1}`}>{'Next ▸'}</Link>}
 			</div>
 			<div className="h-16"></div>
 		</>
