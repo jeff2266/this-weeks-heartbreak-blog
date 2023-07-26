@@ -80,7 +80,7 @@ export default async function Likes({ searchParams }: { searchParams: { [key: st
 				<div className="flex flex-col items-center w-full max-w-screen-sm">
 					<h2 className="my-4">Liked Posts</h2>
 					{signedPosts?.map(post => (
-						<div className="flex w-full p-2 border rounded-sm mb-2 min-w-max">
+						<div className="flex w-full p-2 border rounded-sm mb-2 min-w-max" key={post.id}>
 							<div className="w-1/3">
 								<PostThumbImage params={{ post, responsive: false }} />
 							</div>

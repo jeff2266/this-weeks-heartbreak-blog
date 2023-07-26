@@ -15,5 +15,6 @@ export async function handleLike(like: { userId: string; postId: string; isLike:
 			data: { postId: like.postId, userId: like.userId }
 		})
 	}
-	revalidatePath(callback)
+	revalidatePath('/likes')
+	if (callback !== '/likes') revalidatePath(callback)
 }

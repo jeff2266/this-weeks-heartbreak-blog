@@ -2,8 +2,8 @@
 
 import { handleLike } from '@/serverActions'
 import { useState } from 'react'
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
 type Params = {
 	fill: string

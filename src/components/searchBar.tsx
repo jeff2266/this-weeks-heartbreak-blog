@@ -1,6 +1,15 @@
+import { redirect } from 'next/navigation'
+
 export default function SearchBar() {
+	async function submit(formData: FormData) {
+		'use server'
+		const formQuery = formData.get('query')?.valueOf()
+		const queryString = typeof formQuery === 'string' ? formQuery : ''
+		redirect(`/search?query=${encodeURIComponent(queryString)}`)
+	}
+
 	return (
-		<form className="flex justify-end" action={`/search`}>
+		<form className="flex justify-end" action={submit}>
 			<input
 				name="query"
 				className="bg-inherit border-b outline-none cursor-text mx-2"
