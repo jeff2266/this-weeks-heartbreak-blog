@@ -105,7 +105,7 @@ export default async function Author() {
 	return (
 		<>
 			<h2 className="my-8">Post</h2>
-			<AuthorForm params={{ thumbs, submit }} />
+			<AuthorForm thumbs={thumbs} submit={submit} />
 			<div className="h-16"></div>
 		</>
 	)

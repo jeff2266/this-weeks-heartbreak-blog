@@ -83,7 +83,7 @@ export default async function Search({ searchParams }: { searchParams: { [key: s
 						signedPosts?.map(post => (
 							<div className="flex w-full p-2 border rounded-sm mb-2 min-w-max" key={post.id}>
 								<div className="w-1/3">
-									<PostThumbImage params={{ post, responsive: false }} />
+									<PostThumbImage post={post} responsive={false} />
 								</div>
 								<div className="grow flex flex-col mx-2">
 									<div className="w-full flex justify-between items-center mb-2">

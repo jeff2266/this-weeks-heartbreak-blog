@@ -13,14 +13,7 @@ type Params = {
 	responsive: boolean
 }
 
-export default function PostThumbImage({
-	params: {
-		post: { id, title, thumbUrl, mediaUrl },
-		responsive
-	}
-}: {
-	params: Params
-}) {
+export default function PostThumbImage({ post: { id, title, thumbUrl, mediaUrl }, responsive }: Params) {
 	const { track, setTrack, isPlaying, setIsPlaying } = usePlayerContext()
 	const [imageLoading, setImageLoading] = useState(true)
 

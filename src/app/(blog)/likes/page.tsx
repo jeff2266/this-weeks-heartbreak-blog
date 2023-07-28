@@ -82,21 +82,14 @@ export default async function Likes({ searchParams }: { searchParams: { [key: st
 					{signedPosts?.map(post => (
 						<div className="flex w-full p-2 border rounded-sm mb-2 min-w-max" key={post.id}>
 							<div className="w-1/3">
-								<PostThumbImage params={{ post, responsive: false }} />
+								<PostThumbImage post={post} responsive={false} />
 							</div>
 							<div className="grow flex flex-col mx-2">
 								<div className="w-full flex justify-between items-center mb-2">
 									<Link href={`posts/${post.id}`}>
 										<h3>{post.title}</h3>
 									</Link>
-									<LikeButton
-										params={{
-											fill: '#FFF',
-											like: !!session
-												? { postId: post.id, userId: session.user.userId, isLike: true }
-												: undefined
-										}}
-									/>
+									<LikeButton fill="#FFF" postId={post.id} isSignedIn={!!session} />
 								</div>
 								<div className="flex text-sm">
 									<p>{`${post.authorName} • ${new Date(post.date).toLocaleDateString('en-US', {

@@ -12,7 +12,7 @@ type Params = {
 	submit: (data: FormData) => {}
 }
 
-export default function AuthorForm({ params: { thumbs, submit } }: { params: Params }) {
+export default function AuthorForm({ thumbs, submit }: Params) {
 	const [pending, setPending] = useState(false)
 	return (
 		<>

@@ -1,9 +1,9 @@
-import NextAuth from 'next-auth'
-import GoogleProvider from 'next-auth/providers/google'
 import { AuthOptions } from 'next-auth/core/types'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { prisma } from '@/db'
 import { Adapter } from 'next-auth/adapters'
+import NextAuth from 'next-auth'
+import GoogleProvider from 'next-auth/providers/google'
 
 export const authOptions: AuthOptions = {
 	adapter: PrismaAdapter(prisma) as Adapter,
@@ -24,22 +24,18 @@ export const authOptions: AuthOptions = {
 		async jwt({ token, user }) {
 			if (user) {
 				const dbUser = await prisma.user.findUnique({
-					where: {
-						id: user.id
-					}
+					where: { id: user.id }
 				})
-
 				if (dbUser) {
 					token.role = dbUser.role
 					token.userId = dbUser.id
 				}
 			}
-
 			return token
 		},
 		async signIn({ account, profile }) {
 			if (account?.provider === 'google') {
-				return profile?.email_verified ?? false
+				return !!profile?.email_verified
 			}
 			return true
 		}

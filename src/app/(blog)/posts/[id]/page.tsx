@@ -33,14 +33,6 @@ export default async function Post({ params: { id } }: { params: { id: string } 
 		  })
 		: undefined
 
-	const like = session?.user.userId
-		? await prisma.like.findUnique({
-				where: {
-					postId_userId: { postId: id, userId: session.user.userId }
-				}
-		  })
-		: null
-
 	return (
 		<div className="flex flex-col px-2 lg:p-6 w-full min-h-[65svh] max-w-screen-2xl">
 			{post ? (
@@ -52,7 +44,7 @@ export default async function Post({ params: { id } }: { params: { id: string } 
 						<div className="w-2/3 grow my-4">
 							<div className="border rounded-sm p-2 lg:p-4">
 								<div className="relative w-full">
-									<PostThumbImage params={{ post: { ...post, thumbUrl, mediaUrl }, responsive: true }} />
+									<PostThumbImage post={{ ...post, thumbUrl, mediaUrl }} responsive={true} />
 								</div>
 							</div>
 						</div>
@@ -60,12 +52,7 @@ export default async function Post({ params: { id } }: { params: { id: string } 
 					<div className="grow w-full bg-white text-black px-2 md:px-4 py-4">
 						<div className="flex min-w-fit items-center mb-2">
 							<h2 className="font-semibold">{post.title}</h2>
-							<LikeButton
-								params={{
-									fill: '#000',
-									like: !!session ? { postId: id, userId: session.user.userId, isLike: !!like } : undefined
-								}}
-							/>
+							<LikeButton fill="#000" postId={post.id} isSignedIn={!!session} />
 						</div>
 						<p>{post.content}</p>
 					</div>

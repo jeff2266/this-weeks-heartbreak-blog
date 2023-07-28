@@ -16,7 +16,7 @@ export default function PostThumb({ post: { id, title, authorName, date, thumbUr
 		<div className="w-full md:w-1/2 lg:1/3 xl:w-3/12 p-2">
 			<div className="border-2 rounded-sm p-2">
 				<div className="flex flex-col">
-					<PostThumbImage params={{ post: { id, title, thumbUrl, mediaUrl }, responsive: true }} />
+					<PostThumbImage post={{ id, title, thumbUrl, mediaUrl }} responsive={true} />
 					<Link href={`posts/${id}`} className="mt-1">
 						<h3>{title}</h3>
 						<div className="flex justify-between text-sm">
