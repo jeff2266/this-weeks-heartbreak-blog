@@ -11,7 +11,7 @@ import Link from 'next/link'
 import LikeButton from './likeButton'
 
 type Params = {
-	type: 'MAIN' | 'LIKES' | 'SEARCH'
+	type: 'MAIN' | 'LIKES'
 	take: number
 }
 
@@ -66,22 +66,7 @@ export default function PostsList({ type, take }: Params) {
 		}
 	}, [])
 
-	return type === 'MAIN' ? (
-		<>
-			<div className="flex flex-wrap justify-start -mx-2 mt-2">
-				{signedPosts?.map(post => (
-					<PostThumb key={post.id} post={post} />
-				))}
-			</div>
-			{loading && (
-				<div className="flex w-full justify-center">
-					<div className="w-16">
-						<HeartLoader pulseKey={1} />
-					</div>
-				</div>
-			)}
-		</>
-	) : type === 'LIKES' ? (
+	return type === 'LIKES' ? (
 		<>
 			<div className="flex w-full justify-center">
 				<div className="flex flex-col w-full max-w-screen-sm">
@@ -124,9 +109,20 @@ export default function PostsList({ type, take }: Params) {
 				</div>
 			)}
 		</>
-	) : type === 'SEARCH' ? (
-		<></>
 	) : (
-		<></>
+		<>
+			<div className="flex flex-wrap justify-start -mx-2 mt-2">
+				{signedPosts?.map(post => (
+					<PostThumb key={post.id} post={post} />
+				))}
+			</div>
+			{loading && (
+				<div className="flex w-full justify-center">
+					<div className="w-16">
+						<HeartLoader pulseKey={1} />
+					</div>
+				</div>
+			)}
+		</>
 	)
 }

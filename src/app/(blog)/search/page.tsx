@@ -12,12 +12,6 @@ import Link from 'next/link'
 const POSTS_PER_PAGE = 16
 
 export default async function Search({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
-	const totalPages = Math.ceil((await prisma.post.count()) / POSTS_PER_PAGE)
-	const pageParamStr = searchParams['page']
-	let pageParamNum = 1
-	if (typeof pageParamStr === 'string') pageParamNum = parseInt(pageParamStr)
-	const page = Number.isSafeInteger(pageParamNum) && pageParamNum > 0 && pageParamNum <= totalPages ? pageParamNum : 1
-
 	const queryString = typeof searchParams['query'] === 'string' ? searchParams['query'] : ''
 	const dbQueryString = queryString.match(/^[a-zA-Z0-9\s]+$/)
 		? queryString
@@ -39,7 +33,6 @@ export default async function Search({ searchParams }: { searchParams: { [key: s
 					include: {
 						author: true
 					},
-					skip: POSTS_PER_PAGE * (page - 1),
 					take: POSTS_PER_PAGE
 			  })
 			: []
@@ -102,11 +95,6 @@ export default async function Search({ searchParams }: { searchParams: { [key: s
 					) : (
 						<p className="italic">No matching posts...</p>
 					)}
-					<div className="flex my-2">
-						{page > 1 && <Link href={`/?page=${page - 1}`}>{'< Prev'}</Link>}
-						<div className="grow"></div>
-						{page < totalPages && <Link href={`/?page=${page + 1}`}>{'Next >'}</Link>}
-					</div>
 				</div>
 				<div className="h-16"></div>
 			</div>

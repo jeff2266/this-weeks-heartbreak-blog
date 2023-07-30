@@ -104,7 +104,7 @@ export default async function Author() {
 
 	return (
 		<>
-			<h2 className="my-8">Post</h2>
+			<h2 className="mt-12 mb-8">Post</h2>
 			<AuthorForm thumbs={thumbs} submit={submit} />
 			<div className="h-16"></div>
 		</>

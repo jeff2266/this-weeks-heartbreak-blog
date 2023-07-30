@@ -1,7 +1,3 @@
-import { s3 } from '@/s3'
-import { prisma } from '@/db'
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
-import { GetObjectCommand } from '@aws-sdk/client-s3'
 import SearchBar from '@/components/searchBar'
 import StaticTitle from '@/components/banner/staticTitle'
 import UserSignIn from '@/components/userSignIn'
