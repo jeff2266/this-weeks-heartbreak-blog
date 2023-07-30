@@ -50,7 +50,7 @@ CREATE TABLE "VerificationToken" (
 
 -- CreateTable
 CREATE TABLE "Post" (
-    "id" TEXT NOT NULL,
+    "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "authorId" TEXT NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE "Post" (
 -- CreateTable
 CREATE TABLE "Like" (
     "userId" TEXT NOT NULL,
-    "postId" TEXT NOT NULL
+    "postId" INTEGER NOT NULL
 );
 
 -- CreateIndex

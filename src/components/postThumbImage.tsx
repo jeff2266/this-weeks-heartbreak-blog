@@ -9,7 +9,7 @@ import play from 'public/img/play.svg'
 import defaultImage from 'public/img/post-thumb-image-default.jpg'
 
 type Params = {
-	post: { id: string; title: string; thumbUrl?: string | StaticImageData; mediaUrl?: string }
+	post: { id: number; title: string; thumbUrl?: string | StaticImageData; mediaUrl?: string }
 	responsive: boolean
 }
 

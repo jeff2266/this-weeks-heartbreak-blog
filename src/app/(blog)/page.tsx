@@ -2,14 +2,13 @@ import { s3 } from '@/s3'
 import { prisma } from '@/db'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { GetObjectCommand } from '@aws-sdk/client-s3'
-import PostThumb from '@/components/postThumb'
 import SearchBar from '@/components/searchBar'
 import StaticTitle from '@/components/banner/staticTitle'
 import UserSignIn from '@/components/userSignIn'
-import Link from 'next/link'
 import HamburgerMenu from '@/components/hamburgerMenu'
+import MainPostsList from '@/components/mainPostsList'
 
-const POSTS_PER_PAGE = 8
+const POSTS_PER_PAGE = 1
 
 export default async function Home({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
 	const totalPages = Math.ceil((await prisma.post.count()) / POSTS_PER_PAGE)
@@ -57,16 +56,7 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
 				</nav>
 			</div>
 			<HamburgerMenu />
-			<div className="flex flex-wrap justify-start -mx-2 mt-2">
-				{signedPosts?.map(post => (
-					<PostThumb key={post.id} post={post} />
-				))}
-			</div>
-			<div className="flex my-2">
-				{page > 1 && <Link href={`/?page=${page - 1}`}>{'◂ Prev'}</Link>}
-				<div className="grow"></div>
-				{page < totalPages && <Link href={`/?page=${page + 1}`}>{'Next ▸'}</Link>}
-			</div>
+			<MainPostsList take={POSTS_PER_PAGE} />
 			<div className="h-16"></div>
 		</>
 	)

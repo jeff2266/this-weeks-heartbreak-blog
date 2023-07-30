@@ -13,7 +13,7 @@ export default async function Post({ params: { id } }: { params: { id: string } 
 	const session = await getServerSession(authOptions)
 
 	const post = await prisma.post.findUnique({
-		where: { id },
+		where: { id: parseInt(id) },
 		include: {
 			author: true
 		}

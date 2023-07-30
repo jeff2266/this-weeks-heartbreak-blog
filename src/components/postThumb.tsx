@@ -3,7 +3,7 @@ import PostThumbImage from './postThumbImage'
 import Link from 'next/link'
 
 type Params = {
-	id: string
+	id: number
 	title: string
 	date: Date
 	authorName?: string

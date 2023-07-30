@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { prisma } from './db'
 
-export async function handleLike(like: { userId: string; postId: string; isLike: boolean }, callback: string) {
+export async function handleLike(like: { userId: string; postId: number; isLike: boolean }, callback: string) {
 	if (like.isLike) {
 		await prisma.like.delete({
 			where: {

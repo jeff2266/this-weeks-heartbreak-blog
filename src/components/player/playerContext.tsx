@@ -3,7 +3,7 @@
 import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from 'react'
 
 export type Track = {
-	id: string
+	id: number
 	title: string
 	url: string | null
 	duration: number | null

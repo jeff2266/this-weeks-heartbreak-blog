@@ -7,11 +7,11 @@ import Link from 'next/link'
 
 type Params = {
 	fill: string
-	postId: string
+	postId: number
 	isSignedIn: boolean
 }
 
-async function handleClick(route: string, method: 'POST' | 'DELETE', postId: string, callback?: string) {
+async function handleClick(route: string, method: 'POST' | 'DELETE', postId: number, callback?: string) {
 	return await fetch(route, { method, body: JSON.stringify({ postId, callback }) })
 }
 

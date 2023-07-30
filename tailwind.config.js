@@ -107,69 +107,69 @@ module.exports = {
 						opacity: 0.94387
 					}
 				},
-				textShadow: {
+				dropShadow: {
 					'0%': {
-						textShadow: '0.4389924193300864px 0 1px rgba(0, 30, 255, 0.5), -0.4389924193300864px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(0.4389924193300864px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-0.4389924193300864px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'5%': {
-						textShadow: '1.7928974010788217px 0 1px rgba(0, 30, 255, 0.5), -1.7928974010788217px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(1.0928974010788217px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-1.0928974010788217px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'10%': {
-						textShadow: '0.02956275843481219px 0 1px rgba(0, 30, 255, 0.5), - 0.02956275843481219px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(0.02956275843481219px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-0.02956275843481219px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'15%': {
-						textShadow: '0.40218538552878136px 0 1px rgba(0, 30, 255, 0.5), - 0.40218538552878136px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(0.40218538552878136px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-0.40218538552878136px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'20%': {
-						textShadow: '2.4794037899852017px 0 1px rgba(0, 30, 255, 0.5), - 2.4794037899852017px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(1.6794037899852017px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-1.6794037899852017px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'25%': {
-						textShadow: '0.6125630401149584px 0 1px rgba(0, 30, 255, 0.5), -0.6125630401149584px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(0.6125630401149584px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-0.6125630401149584px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'30%': {
-						textShadow: '0.7015590085143956px 0 1px rgba(0, 30, 255, 0.5), -0.7015590085143956px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(0.7015590085143956px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-0.7015590085143956px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'35%': {
-						textShadow: '2.896914047650351px 0 1px rgba(0, 30, 255, 0.5), -2.896914047650351px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(1.896914047650351px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-1.896914047650351px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'40%': {
-						textShadow: '2.870905614848819px 0 1px rgba(0, 30, 255, 0.5), -2.870905614848819px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(1.870905614848819px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-1.870905614848819px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'45%': {
-						textShadow: '1.231056963361899px 0 1px rgba(0, 30, 255, 0.5), -1.231056963361899px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(1.131056963361899px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-1.131056963361899px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'50%': {
-						textShadow: '0.08084290417898504px 0 1px rgba(0, 30, 255, 0.5), -0.08084290417898504px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(0.08084290417898504px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-0.08084290417898504px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'55%': {
-						textShadow: '1.3758461067427543px 0 1px rgba(0, 30, 255, 0.5), -1.3758461067427543px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(1.3758461067427543px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-1.3758461067427543px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'60%': {
-						textShadow: '1.202193051050636px 0 1px rgba(0, 30, 255, 0.5), -1.202193051050636px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(1.202193051050636px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-1.202193051050636px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'65%': {
-						textShadow: '1.8638780614874975px 0 1px rgba(0, 30, 255, 0.5), -1.8638780614874975px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(1.8638780614874975px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-1.8638780614874975px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'70%': {
-						textShadow: '0.48874025155497314px 0 1px rgba(0, 30, 255, 0.5), -0.48874025155497314px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(0.48874025155497314px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-0.48874025155497314px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'75%': {
-						textShadow: '0.8948491305757957px 0 1px rgba(0, 30, 255, 0.5), -0.8948491305757957px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(0.8948491305757957px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-0.8948491305757957px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'80%': {
-						textShadow: '0.0833037308038857px 0 1px rgba(0, 30, 255, 0.5), -0.0833037308038857px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(0.0833037308038857px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-0.0833037308038857px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'85%': {
-						textShadow: '0.09769827255241735px 0 1px rgba(0, 30, 255, 0.5), -0.09769827255241735px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(0.09769827255241735px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-0.09769827255241735px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'90%': {
-						textShadow: '2.443339761481782px 0 1px rgba(0, 30, 255, 0.5), -2.443339761481782px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(1.743339761481782px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-1.743339761481782px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'95%': {
-						textShadow: '2.1841838852799786px 0 1px rgba(0, 30, 255, 0.5), -2.1841838852799786px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(1.2841838852799786px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-1.2841838852799786px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					},
 					'100%': {
-						textShadow: '2.6208764473832513px 0 1px rgba(0, 30, 255, 0.5), -2.6208764473832513px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px'
+						filter: 'drop-shadow(1.5208764473832513px 0 1px rgba(0, 30, 255, 0.4)) drop-shadow(-1.5208764473832513px 0 1px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 1px)'
 					}
 				}
 			}
