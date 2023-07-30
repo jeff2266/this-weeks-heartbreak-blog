@@ -6,7 +6,7 @@ import SearchBar from '@/components/searchBar'
 import StaticTitle from '@/components/banner/staticTitle'
 import UserSignIn from '@/components/userSignIn'
 import HamburgerMenu from '@/components/hamburgerMenu'
-import MainPostsList from '@/components/mainPostsList'
+import PostsList from '@/components/postsList'
 
 const POSTS_PER_PAGE = 8
 
@@ -21,7 +21,7 @@ export default async function Home() {
 				</nav>
 			</div>
 			<HamburgerMenu />
-			<MainPostsList take={POSTS_PER_PAGE} />
+			<PostsList type="MAIN" take={POSTS_PER_PAGE} />
 			<div className="h-16"></div>
 		</>
 	)

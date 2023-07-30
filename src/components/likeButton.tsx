@@ -9,19 +9,20 @@ type Params = {
 	fill: string
 	postId: number
 	isSignedIn: boolean
+	onDone?: (isLike: boolean) => void
 }
 
-async function handleClick(route: string, method: 'POST' | 'DELETE', postId: number, callback?: string) {
-	return await fetch(route, { method, body: JSON.stringify({ postId, callback }) })
+async function handleClick(route: string, method: 'POST' | 'DELETE', postId: number) {
+	return await fetch(route, { method, body: JSON.stringify({ postId }) })
 }
 
-export default function LikeButton({ fill, postId, isSignedIn }: Params) {
+export default function LikeButton({ fill, postId, onDone, isSignedIn }: Params) {
 	const { baseUrl } = usePlayerContext()
 	const [like, setLike] = useState<boolean | null>(null)
 	useEffect(() => {
 		fetch(`${baseUrl}/api/like/${encodeURIComponent(postId)}`)
-			.then(res => {
-				res.json().then(val => setLike(val !== null))
+			.then(async res => {
+				setLike((await res.json()) !== null)
 			})
 			.catch()
 	}, [])
@@ -45,9 +46,12 @@ export default function LikeButton({ fill, postId, isSignedIn }: Params) {
 				if (like === null) return
 				setLike(null)
 				const res = like
-					? (await handleClick(`${baseUrl}/api/like`, 'DELETE', postId, callback)).ok
-					: (await handleClick(`${baseUrl}/api/like`, 'POST', postId, callback)).ok
-				if (res) setLike(!like)
+					? (await handleClick(`${baseUrl}/api/like`, 'DELETE', postId)).ok
+					: (await handleClick(`${baseUrl}/api/like`, 'POST', postId)).ok
+				if (res) {
+					setLike(!like)
+					if (onDone !== undefined) onDone(!like)
+				}
 			}}
 			disabled={like === null}>
 			<svg fill={fill} version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 471.701 471.701">

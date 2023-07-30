@@ -49,15 +49,13 @@ export default async function Post({ params: { id } }: { params: { id: string } 
 							</div>
 						</div>
 					</div>
-					<div className="grow w-full bg-white text-black px-2 md:px-4 py-4">
-						<div className="flex min-w-fit items-center mb-2">
-							<h2 className="font-semibold">{post.title}</h2>
-							<LikeButton fill="#000" postId={post.id} isSignedIn={!!session} />
-						</div>
-						<p>{post.content}</p>
+					<div className="flex min-w-fit items-center px-2 md:px-4 my-4">
+						<h2 className="font-semibold">{post.title}</h2>
+						<LikeButton fill="#FFF" postId={post.id} isSignedIn={!!session} />
 					</div>
-					<div className="flex py-1 text-sm">
-						<p>{`${post.author.name} • ${post.date.toLocaleString()}`}</p>
+					<div className="grow w-full bg-white border text-black px-2 md:px-4 pt-4">
+						<p className="mb-4">{post.content}</p>
+						<p className="text-sm">{`${post.author.name} • ${post.date.toLocaleString()}`}</p>
 					</div>
 				</>
 			) : (

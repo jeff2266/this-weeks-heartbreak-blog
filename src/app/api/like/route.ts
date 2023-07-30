@@ -5,7 +5,6 @@ import { revalidatePath } from 'next/cache'
 
 type Body = {
 	postId?: string
-	callback?: string
 }
 
 // Like a post
@@ -31,5 +30,6 @@ export async function DELETE(req: NextRequest) {
 	const like = await prisma.like.delete({
 		where: { postId_userId: { postId: parseInt(deleteRequest.postId), userId: token.userId } }
 	})
+
 	return NextResponse.json(!!like ? JSON.stringify(like) : null)
 }
