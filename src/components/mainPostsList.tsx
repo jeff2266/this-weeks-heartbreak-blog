@@ -2,7 +2,7 @@
 
 import { usePlayerContext } from './player/playerContext'
 import { SignedPosts } from '@/app/api/post/route'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import PostThumb from './postThumb'
 import HeartLoader from './heartLoader'
 
@@ -19,26 +19,27 @@ export default function MainPostsList({ take }: Params) {
 
 	useEffect(() => {
 		if (cursor.current === 'DONE') return
-		if (atBottom && !loading) {
-			// Get more posts
-			setLoading(true)
-			const url = `${baseUrl}/api/post?liked=false&take=${take}` + (cursor.current ? `&cursor=${cursor.current}` : '')
-			fetch(url)
-				.then(res => {
-					res.json().then(val => {
+		if (!loading) {
+			setAtBottom(isAtBottom())
+			if (atBottom) {
+				// Get more posts
+				setLoading(true)
+				const url =
+					`${baseUrl}/api/post?liked=false&take=${take}` + (cursor.current ? `&cursor=${cursor.current}` : '')
+				fetch(url)
+					.then(async res => {
+						const val = await res.json()
 						const newSignedPosts = JSON.parse(val) as SignedPosts
+						cursor.current =
+							newSignedPosts.length >= take ? newSignedPosts[newSignedPosts.length - 1].id : 'DONE'
 						setSignedPosts(prev => [...prev, ...newSignedPosts])
-						cursor.current = newSignedPosts.length > 0 ? newSignedPosts[newSignedPosts.length - 1].id : 'DONE'
 					})
-				})
-				.catch()
-				.finally(() => setLoading(false))
+					.finally(() => {
+						setLoading(false)
+					})
+			}
 		}
-	}, [atBottom])
-
-	useLayoutEffect(() => {
-		setAtBottom(isAtBottom())
-	}, [])
+	}, [atBottom, loading, cursor])
 
 	function isAtBottom() {
 		const winScroll = document.body.scrollTop || document.documentElement.scrollTop
@@ -68,7 +69,7 @@ export default function MainPostsList({ take }: Params) {
 			{loading && (
 				<div className="flex w-full justify-center">
 					<div className="w-16">
-						<HeartLoader />
+						<HeartLoader pulseKey={1} />
 					</div>
 				</div>
 			)}
