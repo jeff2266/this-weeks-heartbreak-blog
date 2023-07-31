@@ -1,6 +1,6 @@
 'use client'
 
-import { usePlayerContext } from './player/playerContext'
+import { useClientContext } from './clientContext'
 import { SignedPosts } from '@/app/api/post/route'
 import { useEffect, useRef, useState } from 'react'
 import { useSession } from 'next-auth/react'
@@ -16,7 +16,7 @@ type Params = {
 }
 
 export default function PostsList({ type, take }: Params) {
-	const { baseUrl } = usePlayerContext()
+	const { baseUrl } = useClientContext()
 	const { data: session } = useSession()
 	const [signedPosts, setSignedPosts] = useState<SignedPosts>([])
 	const [atBottom, setAtBottom] = useState(false)

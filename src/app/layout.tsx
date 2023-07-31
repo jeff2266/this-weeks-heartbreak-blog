@@ -1,6 +1,6 @@
 import './globals.css'
 import { Instrument_Sans } from 'next/font/google'
-import ClientProvider from '@/components/clientProvider'
+import ClientSessionProvider from '@/components/clientSessionProvider'
 
 const instrumentSans = Instrument_Sans({ subsets: ['latin'] })
 
@@ -13,9 +13,9 @@ export const metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en" className="scroll-smooth antialiased">
-			<ClientProvider>
+			<ClientSessionProvider>
 				<body className={instrumentSans.className}>{children}</body>
-			</ClientProvider>
+			</ClientSessionProvider>
 		</html>
 	)
 }

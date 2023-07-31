@@ -16,7 +16,6 @@ type PlayerContextState = {
 	setIsPlaying: Dispatch<SetStateAction<boolean>>
 	playTime: number
 	setPlayTime: Dispatch<SetStateAction<number>>
-	baseUrl: string
 }
 
 const defaultPlayerContext: PlayerContextState = {
@@ -25,13 +24,12 @@ const defaultPlayerContext: PlayerContextState = {
 	isPlaying: false,
 	setIsPlaying: () => {},
 	playTime: 0,
-	setPlayTime: () => {},
-	baseUrl: ''
+	setPlayTime: () => {}
 }
 
 const PlayerContext = createContext<PlayerContextState>(defaultPlayerContext)
 
-export const PlayerContextProvider = ({ baseUrl, children }: { baseUrl: string; children?: ReactNode }) => {
+export const PlayerContextProvider = ({ children }: { children?: ReactNode }) => {
 	const [track, setTrack] = useState<Track | null>(null)
 	const [isPlaying, setIsPlaying] = useState<boolean>(false)
 	const [playTime, setPlayTime] = useState<number>(0)
@@ -43,8 +41,7 @@ export const PlayerContextProvider = ({ baseUrl, children }: { baseUrl: string; 
 				isPlaying,
 				setIsPlaying,
 				playTime,
-				setPlayTime,
-				baseUrl
+				setPlayTime
 			}}>
 			{children}
 		</PlayerContext.Provider>

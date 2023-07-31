@@ -1,12 +1,13 @@
 import { s3 } from '@/s3'
 import { prisma } from '@/db'
 import { ListObjectsV2Command, GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3'
+import { Upload } from '@aws-sdk/lib-storage'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
+import { AuthorForm, FileDescription } from '@/components/authorForm'
 import crypto from 'crypto'
-import AuthorForm from '@/components/authorForm'
 
 export default async function Author() {
 	const session = await getServerSession(authOptions)
@@ -18,13 +19,17 @@ export default async function Author() {
 	)
 
 	const thumbInfos = bucketObjects.Contents?.filter(obj => obj.Key?.match(/thumbs\/.+/))
-	const thumbUrls = thumbInfos?.map(async thumb => ({
-		key: thumb.Key?.split('/').at(1),
-		url: await getSignedUrl(s3, new GetObjectCommand({ Bucket: process.env.BUCKET_NAME, Key: thumb.Key }), {
-			expiresIn: 3600
-		})
-	}))
-	const thumbs = thumbUrls ? await Promise.all(thumbUrls) : []
+	const thumbUrls = thumbInfos
+		?.filter(thumb => thumb.Key)
+		.map(async thumb => ({
+			key: thumb.Key?.split('/').at(1),
+			url: await getSignedUrl(s3, new GetObjectCommand({ Bucket: process.env.BUCKET_NAME, Key: thumb.Key }), {
+				expiresIn: 3600
+			})
+		}))
+	const thumbs = thumbUrls
+		? ((await Promise.all(thumbUrls)).filter(thumb => thumb.key !== undefined) as FileDescription[])
+		: []
 
 	async function submit(data: FormData) {
 		'use server'
@@ -68,14 +73,23 @@ export default async function Author() {
 			if (mediaFile.size > 134217728) throw new Error('Media file too large...')
 
 			const mediaId = `${crypto.randomUUID()}.${mediaFile.name.split('.').pop()}`
-			const res = await s3.send(
-				new PutObjectCommand({
+
+			const res = await new Upload({
+				client: s3,
+				params: {
 					Bucket: process.env.BUCKET_NAME,
 					Key: `media/${mediaId}`,
 					Body: Buffer.from(await mediaFile.arrayBuffer()),
 					ContentType: mediaFile.type
+				},
+				queueSize: 4,
+				partSize: 1024 * 1024 * 5
+			})
+				.on('httpUploadProgress', progress => {
+					console.log(progress)
 				})
-			)
+				.done()
+
 			if (res.$metadata.httpStatusCode !== 200)
 				throw new Error(`Error when saving media file, status ${res.$metadata.httpStatusCode}`)
 			media = mediaId
@@ -105,7 +119,7 @@ export default async function Author() {
 	return (
 		<>
 			<h2 className="mt-12 mb-8">Post</h2>
-			<AuthorForm thumbs={thumbs} submit={submit} />
+			<AuthorForm thumbs={thumbs} />
 			<div className="h-16"></div>
 		</>
 	)

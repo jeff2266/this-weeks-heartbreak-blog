@@ -68,3 +68,9 @@ export async function GET(req: NextRequest) {
 
 	return NextResponse.json(JSON.stringify(signedPosts))
 }
+
+// Author a new post
+export async function POST(req: NextRequest) {
+	console.log(JSON.stringify(req))
+	return NextResponse.json({})
+}

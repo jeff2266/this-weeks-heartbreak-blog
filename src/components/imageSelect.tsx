@@ -1,26 +1,24 @@
 'use client'
 
 import { ChangeEventHandler, useState } from 'react'
+import { FileDescription, useAuthorFormContext } from './authorForm'
 import Image from 'next/image'
 import loading from 'public/img/loading.svg'
 
-type Param = {
-	key?: string
-	url?: string
-}
-
-export default function ImageSelect({ thumbs }: { thumbs: Param[] }) {
+export default function ImageSelect({ thumbs }: { thumbs: FileDescription[] }) {
+	const authorFormContext = useAuthorFormContext()
 	const [imageLoading, setImageLoading] = useState<boolean>(false)
-	const [thumbsSelect, setThumbsSelect] = useState<(Param & { isSelected: boolean })[]>(
+	const [thumbsSelect, setThumbsSelect] = useState<(FileDescription & { isSelected: boolean })[]>(
 		thumbs.map(thumb => ({ ...thumb, isSelected: false }))
 	)
-	const [thumbUpload, setThumbUpload] = useState<Param | null>(null)
+	const [thumbUpload, setThumbUpload] = useState<FileDescription | null>(null)
 
 	const selectThumb = (key: string) => {
 		const newThumbsSelect = thumbsSelect.map(thumb => ({ ...thumb, isSelected: false }))
 		const selectedThumb = newThumbsSelect.find(thumb => thumb.key === key)
 		if (selectedThumb) {
 			selectedThumb.isSelected = true
+			authorFormContext.thumbSelect = selectedThumb.key
 			setThumbsSelect(newThumbsSelect)
 			setImageLoading(true)
 		}
@@ -28,8 +26,14 @@ export default function ImageSelect({ thumbs }: { thumbs: Param[] }) {
 
 	const onThumbUpload: ChangeEventHandler<HTMLInputElement> = evt => {
 		const files = evt.target.files
-		if (files && files.length > 0) setThumbUpload({ key: files[0].name, url: URL.createObjectURL(files[0]) })
-		else setThumbUpload(null)
+		if (files && files.length > 0) {
+			const file = files[0]
+			authorFormContext.thumbUpload = file
+			setThumbUpload({ key: file.name, url: URL.createObjectURL(files[0]) })
+		} else {
+			authorFormContext.thumbUpload = null
+			setThumbUpload(null)
+		}
 	}
 
 	const previewImage = thumbUpload?.url ?? thumbsSelect.find(thumb => thumb.isSelected)?.url
@@ -48,7 +52,7 @@ export default function ImageSelect({ thumbs }: { thumbs: Param[] }) {
 									type="radio"
 									name="thumb-select"
 									value={thumb.key}
-									className="hidden peer"
+									className="hidden"
 								/>
 								<label htmlFor={thumb.key} className="peer-checked:bg-slate-800">
 									{thumb.key}

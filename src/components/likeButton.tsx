@@ -1,8 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation'
-import { usePlayerContext } from './player/playerContext'
+import { useClientContext } from './clientContext'
 import Link from 'next/link'
 
 type Params = {
@@ -17,7 +16,7 @@ async function handleClick(route: string, method: 'POST' | 'DELETE', postId: num
 }
 
 export default function LikeButton({ fill, postId, onDone, isSignedIn }: Params) {
-	const { baseUrl } = usePlayerContext()
+	const { baseUrl } = useClientContext()
 	const [like, setLike] = useState<boolean | null>(null)
 	useEffect(() => {
 		fetch(`${baseUrl}/api/like/${encodeURIComponent(postId)}`)
@@ -37,7 +36,6 @@ export default function LikeButton({ fill, postId, onDone, isSignedIn }: Params)
 		C444.801,187.101,434.001,213.101,414.401,232.701z`
 				: ``
 		}`
-	const callback = usePathname()
 
 	return isSignedIn ? (
 		<button
