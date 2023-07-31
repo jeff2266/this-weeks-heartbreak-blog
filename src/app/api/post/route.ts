@@ -15,6 +15,10 @@ export type SignedPosts = {
 	mediaUrl: string | undefined
 }[]
 
+export type PostRequestBody = Prisma.PostGetPayload<{
+	select: { title: true; authorId: true; date: true; content: true; thumb: true; media: true }
+}>
+
 // Get posts
 export async function GET(req: NextRequest) {
 	const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
@@ -71,6 +75,14 @@ export async function GET(req: NextRequest) {
 
 // Author a new post
 export async function POST(req: NextRequest) {
-	console.log(JSON.stringify(req))
-	return NextResponse.json({})
+	const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
+	const postRequest = (await req.json()) as PostRequestBody
+	if (!postRequest || !postRequest.title || !postRequest.authorId || !postRequest.date)
+		return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
+
+	if (!token?.userId || token.userId !== postRequest.authorId)
+		return NextResponse.json({ error: 'Unauthorized request' }, { status: 401 })
+
+	const post = await prisma.post.create({ data: postRequest })
+	return NextResponse.json(JSON.stringify(post))
 }

@@ -27,9 +27,9 @@ export default function ImageSelect({ thumbs }: { thumbs: FileDescription[] }) {
 	const onThumbUpload: ChangeEventHandler<HTMLInputElement> = evt => {
 		const files = evt.target.files
 		if (files && files.length > 0) {
-			const file = files[0]
-			authorFormContext.thumbUpload = file
-			setThumbUpload({ key: file.name, url: URL.createObjectURL(files[0]) })
+			const thumbUpload = files[0]
+			authorFormContext.thumbUpload = thumbUpload
+			setThumbUpload({ key: thumbUpload.name, url: URL.createObjectURL(files[0]) })
 		} else {
 			authorFormContext.thumbUpload = null
 			setThumbUpload(null)

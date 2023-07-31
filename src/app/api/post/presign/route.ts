@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
 	const key = searchParams.get('key')
 	if (key === null) return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
 	const url = await getSignedUrl(s3, new PutObjectCommand({ Bucket: process.env.BUCKET_NAME, Key: key }), {
-		expiresIn: 3600
+		expiresIn: 600
 	})
 	return NextResponse.json(url)
 }

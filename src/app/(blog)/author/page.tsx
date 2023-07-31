@@ -112,7 +112,6 @@ export default async function Author() {
 			if (e instanceof Error) throw new Error(`Error saving new post record, ${e.message}`)
 			throw e
 		}
-		await new Promise(resolve => setTimeout(resolve, 3000))
 		redirect(`/posts/${post.id}`)
 	}
 
