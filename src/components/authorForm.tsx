@@ -83,7 +83,7 @@ export function AuthorForm({ thumbs }: Params) {
 				}
 				xhr.onloadend = () => {
 					if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) resolve(xhr.status)
-					else reject(xhr.status)
+					else reject(`Error when saving image file, status ${xhr.status}`)
 				}
 				xhr.open('PUT', url, true)
 				const blob = await thumbUpload.arrayBuffer()
@@ -91,10 +91,7 @@ export function AuthorForm({ thumbs }: Params) {
 				xhr.send(blob)
 			})
 
-			console.log(res)
 			thumb = thumbUpload.name
-			// if (res.$metadata.httpStatusCode !== 200)
-			// 	throw new Error(`Error when saving image file, status ${res.$metadata.httpStatusCode}`)
 		}
 
 		let media: string | null = null
@@ -112,15 +109,15 @@ export function AuthorForm({ thumbs }: Params) {
 
 			// Upload new media to storage
 			const xhr = new XMLHttpRequest()
-			res = await new Promise(async (resolve, reject) => {
+			const status = await new Promise(async (resolve, reject) => {
 				xhr.upload.onprogress = evt => {
 					if (evt.lengthComputable) {
 						console.log('upload progress:', evt.loaded / evt.total)
 					}
 				}
 				xhr.onloadend = () => {
-					if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) resolve(xhr.response)
-					else reject({ status: xhr.status, response: xhr.response, responseText: xhr.responseText })
+					if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) resolve(xhr.status)
+					else reject(`Error when saving image file, status ${xhr.status}`)
 				}
 				xhr.open('PUT', url, true)
 				const blob = await mediaUpload.arrayBuffer()
@@ -128,10 +125,7 @@ export function AuthorForm({ thumbs }: Params) {
 				xhr.send(blob)
 			})
 
-			console.log(res)
 			media = mediaId
-			// if (res.$metadata.httpStatusCode !== 200)
-			// 	throw new Error(`Error when saving image file, status ${res.$metadata.httpStatusCode}`)
 		}
 
 		// POST for new post
