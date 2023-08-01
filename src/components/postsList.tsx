@@ -24,29 +24,36 @@ export default function PostsList({ type, take }: Params) {
 	const cursor = useRef<number | null | 'DONE'>(null)
 
 	useEffect(() => {
+		document.addEventListener('scroll', onScroll)
+
+		return () => {
+			document.removeEventListener('scroll', onScroll)
+		}
+	}, [])
+
+	useEffect(() => {
 		if (cursor.current === 'DONE') return
 		if (!loading) {
-			setAtBottom(isAtBottom())
 			if (atBottom) {
 				// Get more posts
 				setLoading(true)
 				const url =
 					`${baseUrl}/api/post?liked=${type === 'LIKES'}&take=${take}` +
 					(cursor.current ? `&cursor=${cursor.current}` : '')
-				fetch(url)
-					.then(async res => {
-						const val = await res.json()
-						const newSignedPosts = JSON.parse(val) as SignedPosts
-						cursor.current =
-							newSignedPosts.length >= take ? newSignedPosts[newSignedPosts.length - 1].id : 'DONE'
-						setSignedPosts(prev => [...prev, ...newSignedPosts])
-					})
-					.finally(() => {
-						setLoading(false)
-					})
+				fetch(url).then(async res => {
+					const val = await res.json()
+					const newSignedPosts = JSON.parse(val) as SignedPosts
+					cursor.current = newSignedPosts.length >= take ? newSignedPosts[newSignedPosts.length - 1].id : 'DONE'
+					setSignedPosts(prev => [...prev, ...newSignedPosts])
+				})
 			}
 		}
 	}, [atBottom, loading, cursor])
+
+	useEffect(() => {
+		setAtBottom(isAtBottom())
+		setLoading(false)
+	}, [signedPosts])
 
 	function isAtBottom() {
 		const winScroll = document.body.scrollTop || document.documentElement.scrollTop
@@ -57,14 +64,6 @@ export default function PostsList({ type, take }: Params) {
 	function onScroll() {
 		setAtBottom(isAtBottom())
 	}
-
-	useEffect(() => {
-		document.addEventListener('scroll', onScroll)
-
-		return () => {
-			document.removeEventListener('scroll', onScroll)
-		}
-	}, [])
 
 	return type === 'LIKES' ? (
 		<>
@@ -117,9 +116,11 @@ export default function PostsList({ type, take }: Params) {
 				))}
 			</div>
 			{loading && (
-				<div className="flex w-full justify-center">
-					<div className="w-16">
-						<HeartLoader pulseKey={1} />
+				<div className="flex justify-center w-full">
+					<div className="w-full md:w-1/2 lg:1/3 xl:w-3/12 py-7 flex justify-center">
+						<div className="w-16 pb-[55%]">
+							<HeartLoader pulseKey={1} />
+						</div>
 					</div>
 				</div>
 			)}

@@ -3,10 +3,10 @@
 import { createContext, useContext, useRef, useState } from 'react'
 import { useClientContext } from './clientContext'
 import { useSession } from 'next-auth/react'
+import { Prisma } from '@prisma/client'
 import ImageSelect from '@/components/imageSelect'
 import Link from 'next/link'
 import HeartLoader from './heartLoader'
-import { Post, Prisma } from '@prisma/client'
 
 export type FileDescription = {
 	key: string
@@ -60,7 +60,6 @@ export function AuthorForm({ thumbs }: Params) {
 		authorId
 	}: AuthorFormData & { authorId: string }) {
 		if (!title) throw new Error('Invalid input...')
-		console.log(`${title}, ${content}, ${thumbSelect}, ${thumbUpload?.type}, ${mediaUpload}, ${authorId}`)
 
 		let res: Response
 		let thumb = thumbSelect
@@ -69,37 +68,33 @@ export function AuthorForm({ thumbs }: Params) {
 			// Must be smaller than 1 MB
 			if (thumbUpload.size > 1048576) throw new Error('Image file too large...')
 
-			try {
-				// Get presigned upload url
-				const key = `thumbs/${thumbUpload.name}`
-				res = await fetch(`${baseUrl}/api/post/presign?key=${key}`)
-				const url = res.ok ? await res.json() : ''
+			// Get presigned upload url
+			const key = `thumbs/${thumbUpload.name}`
+			res = await fetch(`${baseUrl}/api/post/presign?key=${key}`)
+			const url = res.ok ? await res.json() : ''
 
-				// Upload new thumb to storage
-				const xhr = new XMLHttpRequest()
-				res = await new Promise(async (resolve, reject) => {
-					xhr.upload.onprogress = evt => {
-						if (evt.lengthComputable) {
-							console.log('upload progress:', evt.loaded / evt.total)
-						}
+			// Upload new thumb to storage
+			const xhr = new XMLHttpRequest()
+			const status = await new Promise(async (resolve, reject) => {
+				xhr.upload.onprogress = evt => {
+					if (evt.lengthComputable) {
+						console.log('upload progress:', evt.loaded / evt.total)
 					}
-					xhr.onloadend = () => {
-						if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) resolve(xhr.response)
-						else reject({ status: xhr.status, response: xhr.response, responseText: xhr.responseText })
-					}
-					xhr.open('PUT', url, true)
-					const blob = await thumbUpload.arrayBuffer()
-					xhr.setRequestHeader('Content-Type', thumbUpload.type)
-					xhr.send(blob)
-				})
+				}
+				xhr.onloadend = () => {
+					if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) resolve(xhr.status)
+					else reject(xhr.status)
+				}
+				xhr.open('PUT', url, true)
+				const blob = await thumbUpload.arrayBuffer()
+				xhr.setRequestHeader('Content-Type', thumbUpload.type)
+				xhr.send(blob)
+			})
 
-				console.log(res)
-				thumb = thumbUpload.name
-				// if (res.$metadata.httpStatusCode !== 200)
-				// 	throw new Error(`Error when saving image file, status ${res.$metadata.httpStatusCode}`)
-			} catch (e) {
-				console.log(e)
-			}
+			console.log(res)
+			thumb = thumbUpload.name
+			// if (res.$metadata.httpStatusCode !== 200)
+			// 	throw new Error(`Error when saving image file, status ${res.$metadata.httpStatusCode}`)
 		}
 
 		let media: string | null = null
@@ -110,38 +105,33 @@ export function AuthorForm({ thumbs }: Params) {
 
 			const mediaId = `${crypto.randomUUID()}.${mediaUpload.name.split('.').pop()}`
 
-			try {
-				// Get presigned upload url
-				const key = `media/${mediaId}`
-				res = await fetch(`${baseUrl}/api/post/presign?key=${key}`)
-				const url = res.ok ? await res.json() : ''
+			// Get presigned upload url
+			const key = `media/${mediaId}`
+			res = await fetch(`${baseUrl}/api/post/presign?key=${key}`)
+			const url = res.ok ? await res.json() : ''
 
-				// Upload new media to storage
-				const xhr = new XMLHttpRequest()
-				res = await new Promise(async (resolve, reject) => {
-					xhr.upload.onprogress = evt => {
-						if (evt.lengthComputable) {
-							console.log('upload progress:', evt.loaded / evt.total)
-						}
+			// Upload new media to storage
+			const xhr = new XMLHttpRequest()
+			res = await new Promise(async (resolve, reject) => {
+				xhr.upload.onprogress = evt => {
+					if (evt.lengthComputable) {
+						console.log('upload progress:', evt.loaded / evt.total)
 					}
-					xhr.onloadend = () => {
-						console.log(`status: ${xhr.status} response: ${xhr.response}`)
-						if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) resolve(xhr.response)
-						else reject({ status: xhr.status, response: xhr.response, responseText: xhr.responseText })
-					}
-					xhr.open('PUT', url, true)
-					const blob = await mediaUpload.arrayBuffer()
-					xhr.setRequestHeader('Content-Type', mediaUpload.type)
-					xhr.send(blob)
-				})
+				}
+				xhr.onloadend = () => {
+					if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) resolve(xhr.response)
+					else reject({ status: xhr.status, response: xhr.response, responseText: xhr.responseText })
+				}
+				xhr.open('PUT', url, true)
+				const blob = await mediaUpload.arrayBuffer()
+				xhr.setRequestHeader('Content-Type', mediaUpload.type)
+				xhr.send(blob)
+			})
 
-				console.log(res)
-				media = mediaId
-				// if (res.$metadata.httpStatusCode !== 200)
-				// 	throw new Error(`Error when saving image file, status ${res.$metadata.httpStatusCode}`)
-			} catch (e) {
-				console.log(e)
-			}
+			console.log(res)
+			media = mediaId
+			// if (res.$metadata.httpStatusCode !== 200)
+			// 	throw new Error(`Error when saving image file, status ${res.$metadata.httpStatusCode}`)
 		}
 
 		// POST for new post

@@ -21,8 +21,12 @@ export default function HeartLoader({ pulseKey }: { pulseKey: number }) {
 	}, [])
 
 	return (
-		<div className="relative w-full animate-[flicker_2s_ease_infinite]">
-			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="-32 18 534 438" className="py-4">
+		<div className="w-full h-full animate-[flicker_2s_ease_infinite] relative">
+			<svg
+				version="1.1"
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="-32 18 534 438"
+				className="w-full h-100 absolute object-cover">
 				{state ? (
 					<path
 						fill={loaderFill}
