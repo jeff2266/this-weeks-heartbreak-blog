@@ -52,7 +52,7 @@ export default function ImageSelect({ thumbs }: { thumbs: FileDescription[] }) {
 									type="radio"
 									name="thumb-select"
 									value={thumb.key}
-									className="hidden"
+									className="hidden peer"
 								/>
 								<label htmlFor={thumb.key} className="peer-checked:bg-slate-800">
 									{thumb.key}

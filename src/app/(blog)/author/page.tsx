@@ -1,5 +1,5 @@
 import { s3 } from '@/s3'
-import { ListObjectsV2Command, GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3'
+import { ListObjectsV2Command, GetObjectCommand } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { AuthorForm, FileDescription } from '@/components/authorForm'
 
@@ -25,7 +25,7 @@ export default async function Author() {
 
 	return (
 		<>
-			<h2 className="mt-12 mb-8">Post</h2>
+			<h2 className="mt-12 mb-2">Post</h2>
 			<AuthorForm thumbs={thumbs} />
 			<div className="h-16"></div>
 		</>

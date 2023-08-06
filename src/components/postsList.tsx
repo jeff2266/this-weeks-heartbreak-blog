@@ -40,12 +40,22 @@ export default function PostsList({ type, take }: Params) {
 				const url =
 					`${baseUrl}/api/post?liked=${type === 'LIKES'}&take=${take}` +
 					(cursor.current ? `&cursor=${cursor.current}` : '')
-				fetch(url).then(async res => {
-					const val = await res.json()
-					const newSignedPosts = JSON.parse(val) as SignedPosts
-					cursor.current = newSignedPosts.length >= take ? newSignedPosts[newSignedPosts.length - 1].id : 'DONE'
-					setSignedPosts(prev => [...prev, ...newSignedPosts])
-				})
+				fetch(url)
+					.then(async res => {
+						try {
+							if (!res.ok) throw new Error(`Fetch error: ${res.status}`)
+							const val = await res.json()
+							const newSignedPosts = JSON.parse(val) as SignedPosts
+							cursor.current =
+								newSignedPosts.length >= take ? newSignedPosts[newSignedPosts.length - 1].id : 'DONE'
+							setSignedPosts(prev => [...prev, ...newSignedPosts])
+						} catch (e) {
+							setLoading(false)
+						}
+					})
+					.catch(e => {
+						setLoading(false)
+					})
 			}
 		}
 	}, [atBottom, loading, cursor])
