@@ -4,8 +4,12 @@ import { ClientContextProvider } from '@/components/clientContext'
 import Player from '@/components/player/player'
 
 export default async function BlogLayout({ children }: { children: React.ReactNode }) {
+	const url = process.env.NEXT_PUBLIC_VERCEL_ENV
+		? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+		: 'http://localhost:3000'
+
 	return (
-		<ClientContextProvider baseUrl={process.env.VERCEL_URL ?? ''}>
+		<ClientContextProvider baseUrl={url}>
 			<PlayerContextProvider>
 				<main className={`w-full flex justify-center`}>
 					<div className="flex-col w-full max-w-screen-xl px-6 py-2 md:px-12">{children}</div>
