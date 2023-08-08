@@ -14,7 +14,7 @@ export default async function UserSignIn() {
 				className="fill-gray-400 my-8 group-hover:fill-white">
 				<path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
 			</svg>
-			<div className="absolute z-20 w-max top-16 bg-white text-black shadow-sm shadow-slate-400 ps-4 pe-3 py-2 rounded-sm invisible group-hover:visible">
+			<div className="absolute z-20 w-max top-16 bg-white text-black shadow-sm shadow-slate-400 ps-5 pe-3 py-2 rounded-sm invisible group-hover:visible">
 				<ul className="text-right list-none">
 					{session ? (
 						<>
@@ -22,9 +22,14 @@ export default async function UserSignIn() {
 								<Link href="/likes">Likes</Link>
 							</li>
 							{(session.user.role === 'ADMIN' || session.user.role === 'AUTHOR') && (
-								<li>
-									<Link href="/author">Post</Link>
-								</li>
+								<>
+									<li>
+										<Link href="/author/posts">My Posts</Link>
+									</li>
+									<li>
+										<Link href="/author">New Post</Link>
+									</li>
+								</>
 							)}
 							<hr className="my-2" />
 							<li>

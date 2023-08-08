@@ -18,9 +18,9 @@ export default async function AuthoredPosts() {
 			</div>
 			<HamburgerMenu />
 			<div className="flex w-full justify-center">
-				<h2 className="my-4">Liked Posts</h2>
+				<h2 className="my-4">Authored Posts</h2>
 			</div>
-			<PostsList type="LIKES" take={POSTS_PER_PAGE} />
+			<PostsList type="AUTHORED" take={POSTS_PER_PAGE} />
 			<div className="h-16"></div>
 		</>
 	)

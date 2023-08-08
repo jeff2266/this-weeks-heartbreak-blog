@@ -22,9 +22,14 @@ export default function HamburgerMenu() {
 											<Link href="/likes">Likes</Link>
 										</li>
 										{(session.user.role === 'ADMIN' || session.user.role === 'AUTHOR') && (
-											<li>
-												<Link href="/author">Post</Link>
-											</li>
+											<>
+												<li>
+													<Link href="/author/posts">My Posts</Link>
+												</li>
+												<li>
+													<Link href="/author">New Post</Link>
+												</li>
+											</>
 										)}
 										<hr className="w-full my-2" />
 										<li>

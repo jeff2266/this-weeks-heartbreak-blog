@@ -14,8 +14,10 @@ export default withAuth({
 				? req.nextUrl.pathname.startsWith('/api/post/presign')
 					? true
 					: req.method === 'GET'
-					? req.nextUrl.searchParams.get('liked') === 'true'
+					? req.nextUrl.searchParams.get('filter') === 'liked'
 						? !!token
+						: req.nextUrl.searchParams.get('filter') === 'authored'
+						? token?.role === Role.ADMIN || token?.role === Role.AUTHOR
 						: true
 					: req.method === 'POST'
 					? token?.role === Role.ADMIN || token?.role === Role.AUTHOR

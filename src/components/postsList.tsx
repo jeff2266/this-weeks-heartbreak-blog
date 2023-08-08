@@ -11,7 +11,7 @@ import Link from 'next/link'
 import LikeButton from './likeButton'
 
 type Params = {
-	type: 'MAIN' | 'LIKES'
+	type: 'MAIN' | 'LIKES' | 'AUTHORED'
 	take: number
 }
 
@@ -38,8 +38,9 @@ export default function PostsList({ type, take }: Params) {
 				// Get more posts
 				setLoading(true)
 				const url =
-					`${baseUrl}/api/post?liked=${type === 'LIKES'}&take=${take}` +
-					(cursor.current ? `&cursor=${cursor.current}` : '')
+					`${baseUrl}/api/post?filter=${
+						type === 'LIKES' ? 'liked' : type === 'AUTHORED' ? 'authored' : ''
+					}&take=${take}` + (cursor.current ? `&cursor=${cursor.current}` : '')
 				fetch(url)
 					.then(async res => {
 						try {
@@ -99,6 +100,39 @@ export default function PostsList({ type, take }: Params) {
 											}
 										}}
 									/>
+								</div>
+								<div className="flex text-sm">
+									<p>{`${post.authorName} • ${new Date(post.date).toLocaleDateString('en-US', {
+										dateStyle: 'short'
+									})}`}</p>
+								</div>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+			{loading && (
+				<div className="flex w-full justify-center">
+					<div className="w-16">
+						<HeartLoader pulseKey={1} />
+					</div>
+				</div>
+			)}
+		</>
+	) : type === 'AUTHORED' ? (
+		<>
+			<div className="flex w-full justify-center">
+				<div className="flex flex-col w-full max-w-screen-sm">
+					{signedPosts?.map(post => (
+						<div className="flex w-full p-2 border rounded-sm mb-2 min-w-max" key={post.id}>
+							<div className="w-1/3">
+								<PostThumbImage post={post} responsive={false} />
+							</div>
+							<div className="grow flex flex-col mx-2">
+								<div className="w-full flex justify-between items-center mb-2">
+									<Link href={`posts/${post.id}`}>
+										<h3>{post.title}</h3>
+									</Link>
 								</div>
 								<div className="flex text-sm">
 									<p>{`${post.authorName} • ${new Date(post.date).toLocaleDateString('en-US', {
