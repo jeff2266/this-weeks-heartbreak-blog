@@ -39,7 +39,7 @@ export default function PostsList({ type, take }: Params) {
 				setLoading(true)
 				const url =
 					`${baseUrl}/api/post?filter=${
-						type === 'LIKES' ? 'liked' : type === 'AUTHORED' ? 'authored' : ''
+						type === 'LIKES' ? 'liked' : type === 'AUTHORED' ? 'authored' : 'none'
 					}&take=${take}` + (cursor.current ? `&cursor=${cursor.current}` : '')
 				fetch(url)
 					.then(async res => {
