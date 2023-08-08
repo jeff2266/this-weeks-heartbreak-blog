@@ -33,7 +33,6 @@ export default function PostsList({ type, take }: Params) {
 
 	useEffect(() => {
 		if (cursor.current === 'DONE') return
-		console.log(`atBottom ${atBottom}, loading ${loading}, cursor ${cursor.current}`)
 		if (!loading) {
 			if (atBottom) {
 				// Get more posts
@@ -53,10 +52,12 @@ export default function PostsList({ type, take }: Params) {
 							setSignedPosts(prev => [...prev, ...newSignedPosts])
 						} catch (e) {
 							setLoading(false)
+							cursor.current = 'DONE'
 						}
 					})
 					.catch(e => {
 						setLoading(false)
+						cursor.current = 'DONE'
 					})
 			}
 		}
