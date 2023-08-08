@@ -33,6 +33,7 @@ export default function PostsList({ type, take }: Params) {
 
 	useEffect(() => {
 		if (cursor.current === 'DONE') return
+		console.log(`atBottom ${atBottom}, loading ${loading}, cursor ${cursor.current}`)
 		if (!loading) {
 			if (atBottom) {
 				// Get more posts
