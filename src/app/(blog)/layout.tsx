@@ -4,7 +4,7 @@ import { ClientContextProvider } from '@/components/clientContext'
 import Player from '@/components/player/player'
 
 export default async function BlogLayout({ children }: { children: React.ReactNode }) {
-	const url = process.env.VERCEL_ENV ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'
+	const url = process.env.VERCEL_ENV ? `https://${process.env.PUBLIC_URL}` : 'http://localhost:3000'
 
 	return (
 		<ClientContextProvider baseUrl={url}>

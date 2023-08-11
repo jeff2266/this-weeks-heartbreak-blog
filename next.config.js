@@ -15,7 +15,7 @@ const nextConfig = {
 		}
 	}),
 	async headers() {
-		const url = process.env.VERCEL_ENV ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'
+		const url = process.env.PUBLIC_URL ? `https://${process.env.PUBLIC_URL}` : 'http://localhost:3000'
 		return [{
 			source: '/api/:path*',
 			headers: [
