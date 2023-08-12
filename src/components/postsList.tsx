@@ -51,8 +51,9 @@ export default function PostsList({ type, take }: Params) {
 								newSignedPosts.length >= take ? newSignedPosts[newSignedPosts.length - 1].id : 'DONE'
 							setSignedPosts(prev => [...prev, ...newSignedPosts])
 						} catch (e) {
-							setLoading(false)
 							cursor.current = 'DONE'
+						} finally {
+							setLoading(false)
 						}
 					})
 					.catch(e => {
