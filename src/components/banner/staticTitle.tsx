@@ -16,9 +16,7 @@ export default function StaticTitle({ animate }: { animate: boolean }) {
 				className={`flex items-center text-xl lg:text-2xl ${
 					animate ? 'animate-[dropShadow_2s_infinite] select-none' : ''
 				}`}>
-				<p className="block lg:hidden">{'♡'}&nbsp;</p>
 				<p className="text-center">{"This week's heartbreak"}</p>
-				<p className="block lg:hidden">&nbsp;{'♡'}</p>
 			</span>
 		</Link>
 	)

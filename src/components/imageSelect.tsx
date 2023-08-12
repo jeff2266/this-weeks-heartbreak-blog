@@ -41,7 +41,7 @@ export default function ImageSelect({ thumbs }: { thumbs: FileDescription[] }) {
 	return (
 		<>
 			<label htmlFor="thumb-select">Image</label>
-			<div className="flex h-full">
+			<div className="flex gap-2 h-full">
 				<ul className="w-2/5 p-2 me-2 overflow-auto border cursor-default select-none">
 					{thumbs
 						.filter(thumb => thumb.key)
@@ -60,7 +60,7 @@ export default function ImageSelect({ thumbs }: { thumbs: FileDescription[] }) {
 							</li>
 						))}
 				</ul>
-				<div className="relative overflow-hidden w-3/5 ms-2 border">
+				<div className="flex relative overflow-hidden w-3/5 border">
 					{previewImage ? (
 						<div className="relative w-full pb-[55%]">
 							<Image
