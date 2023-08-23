@@ -24,55 +24,56 @@ export default function PostsList({ type, take }: Params) {
 	const cursor = useRef<number | null | 'DONE'>(null)
 
 	useEffect(() => {
-		document.addEventListener('scroll', onScroll)
+		window.addEventListener('scroll', onScroll)
+		// document.addEventListener('scroll', onScroll)
 
 		return () => {
-			document.removeEventListener('scroll', onScroll)
+			window.removeEventListener('scroll', onScroll)
+			// document.removeEventListener('scroll', onScroll)
 		}
 	}, [])
-
-	useEffect(() => {
-		if (cursor.current === 'DONE') return
-		if (!loading) {
-			if (atBottom) {
-				// Get more posts
-				setLoading(true)
-				const url =
-					`${baseUrl}/api/post?filter=${
-						type === 'LIKES' ? 'liked' : type === 'AUTHORED' ? 'authored' : 'none'
-					}&take=${take}` + (cursor.current ? `&cursor=${cursor.current}` : '')
-				fetch(url)
-					.then(async res => {
-						try {
-							if (!res.ok) throw new Error(`Fetch error: ${res.status}`)
-							const val = await res.json()
-							const newSignedPosts = JSON.parse(val) as SignedPosts
-							cursor.current =
-								newSignedPosts.length >= take ? newSignedPosts[newSignedPosts.length - 1].id : 'DONE'
-							setSignedPosts(prev => [...prev, ...newSignedPosts])
-						} catch (e) {
-							cursor.current = 'DONE'
-						} finally {
-							setLoading(false)
-						}
-					})
-					.catch(e => {
-						setLoading(false)
-						cursor.current = 'DONE'
-					})
-			}
-		}
-	}, [atBottom, loading, cursor])
 
 	useEffect(() => {
 		setAtBottom(isAtBottom())
 		setLoading(false)
 	}, [signedPosts])
 
+	useEffect(() => {
+		if (cursor.current === 'DONE' || loading) return
+		if (atBottom) {
+			// Get more posts
+			setLoading(true)
+			const url =
+				`${baseUrl}/api/post?filter=${
+					type === 'LIKES' ? 'liked' : type === 'AUTHORED' ? 'authored' : 'none'
+				}&take=${take}` + (cursor.current ? `&cursor=${cursor.current}` : '')
+			fetch(url)
+				.then(async res => {
+					try {
+						if (!res.ok) throw new Error(`Fetch error: ${res.status}`)
+						const val = await res.json()
+						const newSignedPosts = JSON.parse(val) as SignedPosts
+						cursor.current =
+							newSignedPosts.length >= take ? newSignedPosts[newSignedPosts.length - 1].id : 'DONE'
+						setSignedPosts(prev => [...prev, ...newSignedPosts])
+					} catch (e) {
+						cursor.current = 'DONE'
+					} finally {
+						setLoading(false)
+					}
+				})
+				.catch(e => {
+					setLoading(false)
+					cursor.current = 'DONE'
+				})
+		}
+	}, [atBottom, loading, cursor])
+
 	function isAtBottom() {
-		const winScroll = document.body.scrollTop || document.documentElement.scrollTop
-		const height = document.documentElement.scrollHeight - document.documentElement.clientHeight
-		return Math.abs(height - winScroll) < 5
+		const windowHeight = window.innerHeight
+		const windowBottomPosition = windowHeight + Math.ceil(window.scrollY)
+		const documentTotalHeight = document.body.offsetHeight
+		return windowBottomPosition >= documentTotalHeight
 	}
 
 	function onScroll() {
