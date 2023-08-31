@@ -54,7 +54,7 @@ export default async function Post({ params: { id } }: { params: { id: string } 
 						<LikeButton fill="#FFF" postId={post.id} isSignedIn={!!session} />
 					</div>
 					<div className="grow w-full bg-white border text-black px-2 md:px-4 pt-4">
-						<p className="mb-4">{post.content}</p>
+						<p className="whitespace-pre-wrap mb-4">{post.content}</p>
 						<p className="text-sm">{`${post.author.name} • ${post.date.toLocaleString()}`}</p>
 					</div>
 				</>
