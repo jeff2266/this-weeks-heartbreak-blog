@@ -85,7 +85,7 @@ export default function PostsList({ type, take }: Params) {
 			<div className="flex w-full justify-center">
 				<div className="flex flex-col w-full max-w-screen-sm">
 					{signedPosts?.map(post => (
-						<div className="flex w-full p-2 border rounded-sm mb-2 min-w-max" key={post.id}>
+						<div className="flex w-full items-center p-1 border rounded-sm mb-2" key={post.id}>
 							<div className="w-1/3">
 								<PostThumbImage post={post} responsive={false} />
 							</div>
@@ -105,8 +105,10 @@ export default function PostsList({ type, take }: Params) {
 										}}
 									/>
 								</div>
-								<div className="flex text-sm">
-									<p>{`${post.authorName} • ${new Date(post.date).toLocaleDateString('en-US', {
+								<div className="text-sm">
+									<p className="whitespace-nowrap">{`${post.authorName} • ${new Date(
+										post.date
+									).toLocaleDateString('en-US', {
 										dateStyle: 'short'
 									})}`}</p>
 								</div>
@@ -128,7 +130,7 @@ export default function PostsList({ type, take }: Params) {
 			<div className="flex w-full justify-center">
 				<div className="flex flex-col w-full max-w-screen-sm">
 					{signedPosts?.map(post => (
-						<div className="flex w-full p-2 border rounded-sm mb-2 min-w-max" key={post.id}>
+						<div className="flex w-full items-center p-1 border rounded-sm mb-2 min-w-max" key={post.id}>
 							<div className="w-1/3">
 								<PostThumbImage post={post} responsive={false} />
 							</div>
