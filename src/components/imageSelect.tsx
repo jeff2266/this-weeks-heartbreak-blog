@@ -40,7 +40,9 @@ export default function ImageSelect({ thumbs }: { thumbs: FileDescription[] }) {
 
 	return (
 		<>
-			<label htmlFor="thumb-select">Image</label>
+			<label className="font-semibold" htmlFor="thumb-select">
+				Image
+			</label>
 			<div className="flex gap-2 h-full">
 				<ul className="w-2/5 p-2 me-2 overflow-auto border cursor-default select-none">
 					{thumbs
@@ -86,7 +88,7 @@ export default function ImageSelect({ thumbs }: { thumbs: FileDescription[] }) {
 					)}
 				</div>
 			</div>
-			<div className="flex flex-col">
+			<div className="flex flex-col mt-2">
 				<input
 					type="file"
 					name="thumb-file"

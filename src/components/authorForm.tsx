@@ -197,7 +197,9 @@ export function AuthorForm({ thumbs }: Params) {
 					}}>
 					<div className="flex flex-wrap gap-x-4 my-2 justify-between w-full relative rounded overflow-hidden">
 						<div className="grow flex flex-col min-w-fit">
-							<label htmlFor="title">Title</label>
+							<label className="font-semibold" htmlFor="title">
+								Title
+							</label>
 							<input
 								id="title"
 								name="title"
@@ -207,7 +209,9 @@ export function AuthorForm({ thumbs }: Params) {
 								required
 							/>
 							<div className="flex flex-col h-full min-h-[8rem] my-2">
-								<label htmlFor="content">Content</label>
+								<label className="font-semibold" htmlFor="content">
+									Content
+								</label>
 								<textarea
 									id="content"
 									name="content"
@@ -219,7 +223,9 @@ export function AuthorForm({ thumbs }: Params) {
 						<div className="grow flex flex-col min-w-fit">
 							<ImageSelect thumbs={thumbs} />
 							<div className="flex flex-col my-2">
-								<label htmlFor="media-file">Media</label>
+								<label className="font-semibold" htmlFor="media-file">
+									Media
+								</label>
 								<input
 									type="file"
 									name="media-file"
