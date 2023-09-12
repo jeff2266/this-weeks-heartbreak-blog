@@ -14,7 +14,7 @@ type Params = {
 export default function PostThumb({ post: { id, title, authorName, date, thumbUrl, mediaUrl } }: { post: Params }) {
 	return (
 		<div className="w-full md:w-1/2 lg:1/3 xl:w-3/12 p-2">
-			<div className="border-2 rounded-sm p-2">
+			<div className="border-[1px] rounded-sm p-2">
 				<div className="flex flex-col">
 					<PostThumbImage post={{ id, title, thumbUrl, mediaUrl }} responsive={true} />
 					<Link href={`posts/${id}`} className="mt-1">
